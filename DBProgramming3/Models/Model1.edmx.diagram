@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c53127fff9ab458d96c3dbd3e09712f6" Name="Diagram1">
+        <EntityTypeShape EntityType="TechSupportModel.Customer" Width="1.5" PointX="7.375" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TechSupportModel.Incident" Width="1.5" PointX="3.75" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TechSupportModel.Product" Width="1.5" PointX="3.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TechSupportModel.Registration" Width="1.5" PointX="7.375" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TechSupportModel.State" Width="1.5" PointX="10.375" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TechSupportModel.Technician" Width="1.5" PointX="0.5" PointY="1.125" IsExpanded="true" />
+        <AssociationConnector Association="TechSupportModel.FK_Incidents_Customers" ManuallyRouted="false" />
+        <AssociationConnector Association="TechSupportModel.FK_Registrations_Customers" ManuallyRouted="false" />
+        <AssociationConnector Association="TechSupportModel.FK_States_Customers" ManuallyRouted="false" />
+        <AssociationConnector Association="TechSupportModel.FK_Incidents_Products" ManuallyRouted="false" />
+        <AssociationConnector Association="TechSupportModel.FK_Incidents_Technicians" ManuallyRouted="false" />
+        <AssociationConnector Association="TechSupportModel.FK_Registrations_Products" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

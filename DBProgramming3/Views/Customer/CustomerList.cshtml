@@ -1,0 +1,62 @@
+﻿@model List<DBProgramming3.Models.Customer>
+
+@{
+    ViewBag.Title = "CustomerList";
+}
+
+<link rel="stylesheet" href="~/Content/StyleSheet1.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;600;800&display=swap" rel="stylesheet">
+
+<div class="row">
+    <div class="col-md-7">
+        <h2 class="mainHeader">Customers List</h2>
+    </div>
+    <div class="col-md-2"></div>
+    <div class="col-md-3">
+        <div class="searchContainer">
+            <label class="searchLabel">Search By:</label>
+            <input type="text" name="searchText" list="searchList" />
+            <datalist id="searchList" placeholder="Search By:">
+                <option value="ID"></option>
+                <option value="Name"></option>
+                <option value="Phone"></option>
+                <option value="Email"></option>
+            </datalist>
+            <input type="text" id="searchTerm" class="searchTerm" placeholder="Search..." />
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <table id="stateList" class="styled-table">
+            <thead>
+                <tr>
+                    <th>Customer ID</th>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>City</th>
+                    <th>State</th>
+                    <th>ZipCode</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var customer in Model)
+                {
+                <tr>
+                    <td>@customer.CustomerID</td>
+                    <td>@customer.Name</td>
+                    <td>@customer.Phone</td>
+                    <td>@customer.Email</td>
+                    <td>@customer.City</td>
+                    <td>@customer.State</td>
+                    <td>@customer.ZipCode</td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

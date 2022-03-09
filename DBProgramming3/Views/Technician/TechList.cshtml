@@ -1,0 +1,56 @@
+﻿@model List<DBProgramming3.Models.Technician>
+
+@{
+    ViewBag.Title = "TechList";
+}
+
+<link rel="stylesheet" href="~/Content/StyleSheet1.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;600;800&display=swap" rel="stylesheet">
+
+<div class="row">
+    <div class="col-md-7">
+        <h2 class="mainHeader">Technicians List</h2>
+    </div>
+    <div class="col-md-2"></div>
+    <div class="col-md-3">
+        <div class="searchContainer">
+            <label class="searchLabel">Search By:</label>
+            <input type="text" name="searchText" list="searchList" />
+            <datalist id="searchList" placeholder="Search By:">
+                <option value="Code"></option>
+                <option value="Name"></option>
+                <option value="First Zip Code"></option>
+                <option value="Last Zip Code"></option>
+            </datalist>
+            <input type="text" id="searchTerm" class="searchTerm" placeholder="Search..." />
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <table id="stateList" class="styled-table">
+            <thead>
+                <tr>
+                    <th>Tech ID</th>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var technician in Model)
+                {
+                    <tr>
+                        <td>@technician.TechID</td>
+                        <td>@technician.Name</td>
+                        <td>@technician.Phone</td>
+                        <td>@technician.Email</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

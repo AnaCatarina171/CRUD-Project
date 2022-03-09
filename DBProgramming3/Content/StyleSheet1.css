@@ -1,0 +1,106 @@
+﻿body {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.5em;
+    font-weight: 400;
+}
+
+.mainHeader {
+    text-align: right;
+    width: 100%;
+    margin: 70px 0 50px 0;
+    font-weight: 900;
+    text-shadow: 3px 2px 8px #dddddd;
+}
+
+.styled-table {
+    border-collapse: separate;
+    border-radius: 10px;
+    border-bottom: 3px solid #15c1ae;
+    margin: auto;
+    font-size: 0.9em;
+    min-width: 100%;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.20);
+}
+
+.styled-table thead tr {
+    background-color: #15c1ae;
+    color: #ffffff;
+    text-align: left;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+}
+
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+table tr:first-child th:first-child {
+    border-top-left-radius: 10px;
+}
+
+table tr:first-child th:last-child {
+    border-top-right-radius: 10px;
+}
+
+table tr:last-child td:first-child {
+    border-bottom-left-radius: 10px;
+}
+
+table tr:last-child td:last-child {
+    border-bottom-right-radius: 10px;
+}
+
+.styled-table tbody tr:hover{
+    background-color: #189AB4;
+    color: #fff;
+    transition: 0.7s;
+}
+
+a {
+    color: #b7520d;
+}
+
+a:hover {
+    color: #581207;
+}
+
+th {
+    cursor: pointer;
+}
+
+
+/*----- Search Container -----*/
+.searchContainer {
+    margin: 40px auto;
+    text-align: right;
+}
+
+.searchTerm{
+    margin-top: 10px;
+}
+
+/*----- Tech Support Header -----*/
+.homeHeader {
+    text-align: center;
+    width: 100%;
+    margin: 50px 0 50px 0;
+    font-weight: 700;
+    text-shadow: 3px 2px 8px #dddddd;
+}
+p{
+    text-align: center;
+}
+.regularP{
+    font-size: 1.8em;
+}
+.jumbotron {
+    width: 100%;
+    background-image: linear-gradient(rgba(4,9,30,0.7),rgba(4,9,30,0.7)), url(../images/)
+}
