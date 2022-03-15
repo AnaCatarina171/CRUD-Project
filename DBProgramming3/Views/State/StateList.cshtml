@@ -8,26 +8,48 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;600;800&display=swap" rel="stylesheet">
+<script defer src="~/Content/JavaScript.js"></script>
 
 <div class="row">
     <div class="col-md-7">
         <h2 class="mainHeader">States List</h2>
     </div>
     <div class="col-md-2"></div>
-    <div class="col-md-3">
-        <div class="searchContainer">
-            <label class="searchLabel">Search By:</label>
-            <input type="text" name="searchText" list="searchList" />
-            <datalist id="searchList" placeholder="Search By:">
-                <option value="Code"></option>
-                <option value="Name"></option>
-                <option value="First Zip Code"></option>
-                <option value="Last Zip Code"></option>
-            </datalist>
-            <input type="text" id="searchTerm" class="searchTerm" placeholder="Search..."/>
+    @using (Html.BeginForm("StateList", "State", FormMethod.Get))
+    {
+        <div class="col-md-3">
+            <div class="searchContainer">
+                <div>Search By:</div>
+                <select name="cmbSearch" id="cmbSearch" class="cmbSearch">
+                    <option value="0">Choose an option</option>
+                    <option value="1">Code</option>
+                    <option value="2">Name</option>
+                    <option value="3">First Zip Code</option>
+                    <option value="4">Last Zip Code</option>
+                </select>
+                <input type="text" id="searchTerm" name="searchTerm" class="searchTerm" placeholder="Search..." />
+                <div>
+                    <input type="submit" class="btnStyled smallBtn" value="GO" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<form method="post" action="/State/CreateState" autocomplete="on" class="formAddElement">
+    <div class="row">
+        <div class="col-md-12 addElementContainer">
+            <h4>Add a State</h4>
+            <div>
+                <label>Code:&nbsp;</label><input type="text" id="txtStateCode" name="txtStateCode"/>&emsp;
+                <label>Name:&nbsp;</label><input type="text" id="txtStateName" name="txtStateName"/>&emsp;
+                <label>First Zip Code:&nbsp;</label><input type="number" id="txtStateFZipCode" name="txtStateFZipCode"/>&emsp;
+                <label>Last Zip Code:&nbsp;</label> <input type="number" id="txtStateLZipCode" name="txtStateLZipCode"/>
+            </div>
+            <input type="submit" value="Submit" class="btnStyled" id="btnSubmitNewState"/>
         </div>
     </div>
-</div>
+</form>
 
 <div class="row">
     <div class="col-md-12">
@@ -38,6 +60,7 @@
                     <th>Name</th>
                     <th>First Zip Code</th>
                     <th>Last Zip Code</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -48,9 +71,14 @@
                         <td>@state.StateName</td>
                         <td>@state.FirstZipCode</td>
                         <td>@state.LastZipCode</td>
+                        <td>
+                            @Html.ActionLink("Edit", "AddOrUpdateState", "State", new { code = state.StateCode}, null) |
+                            @Html.ActionLink("Delete", "Delete", "State", new { code = state.StateCode }, new { id = "deleteLink" })
+                        </td>
                     </tr>
                 }
             </tbody>
         </table>
     </div>
+
 </div>

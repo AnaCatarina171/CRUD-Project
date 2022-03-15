@@ -61,6 +61,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -127,6 +128,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MessageBox.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -176,6 +179,8 @@
     <Content Include="App_Data\TechSupport_log.ldf">
       <DependentUpon>TechSupport.mdf</DependentUpon>
     </Content>
+    <Content Include="Content\addressAPI\mainScript.js" />
+    <Content Include="Content\addressAPI\mainStyle.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -186,6 +191,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Img\pexels-athena-2582937.jpg" />
+    <Content Include="Img\pexels-fauxels-3184454.jpg" />
     <Content Include="Models\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model1.Context.cs</LastGenOutput>
@@ -237,6 +244,9 @@
     <Content Include="Views\Customer\CustomerList.cshtml" />
     <Content Include="Views\Incident\IncidentList.cshtml" />
     <Content Include="Views\Registration\RegistrationList.cshtml" />
+    <Content Include="Views\Test\Index.cshtml" />
+    <Content Include="Views\Technician\AddOrUpdateTech.cshtml" />
+    <Content Include="Views\Registration\AddOrUpdateRegistration.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

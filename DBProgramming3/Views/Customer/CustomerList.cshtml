@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;600;800&display=swap" rel="stylesheet">
+<script defer src="~/Content/JavaScript.js"></script>
 
 <div class="row">
     <div class="col-md-7">
@@ -38,9 +39,9 @@
                     <th>Name</th>
                     <th>Phone</th>
                     <th>Email</th>
-                    <th>City</th>
                     <th>State</th>
-                    <th>ZipCode</th>
+                    <th>Incidents</th>
+                    <th>Registrations</th>
                 </tr>
             </thead>
             <tbody>
@@ -51,9 +52,9 @@
                     <td>@customer.Name</td>
                     <td>@customer.Phone</td>
                     <td>@customer.Email</td>
-                    <td>@customer.City</td>
                     <td>@customer.State</td>
-                    <td>@customer.ZipCode</td>
+                    <td>@customer.Incidents.Count()</td>
+                    <td>@customer.Registrations.Count()</td>
                 </tr>
                 }
             </tbody>

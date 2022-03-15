@@ -3,6 +3,11 @@
 }
 
 <link rel="stylesheet" href="~/Content/StyleSheet1.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;600;800&display=swap" rel="stylesheet">
+
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
 
 <div class="jumbotron">
     <h1 class="homeHeader">Tech Support System</h1>
@@ -10,8 +15,13 @@
 
 <div class="row">
     <div class="col-md-12">
-        <p>Navigate thorugh the top links to perform the desired action</p>
+        <p class="regularP">Navigate thorugh the top links to perform the desired action</p>
     </div>
+    <!--
+        <div class="col-md-12">
+        <input type="text" id="searchTextField" style="margin: auto"/>
+    </div>
+    -->
 </div>
 
 <hr />
@@ -21,3 +31,14 @@
         Contact Us: +1 (999) 999-9999 <br /> <a href="mailto:techsuport@gmal.com">techsuport@gmal.com</a>
     </p>
 </div>
+
+<!--
+    <script>
+    function initialize() {
+        var input = document.getElementById('searchTextField');
+        new google.maps.places.Autocomplete(input);
+    }
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+-->

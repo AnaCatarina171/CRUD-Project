@@ -1,14 +1,39 @@
-﻿
+﻿@model DBProgramming3.Models.State
+
 @{
     ViewBag.Title = "AddOrUpdateState";
 }
 
+<link rel="stylesheet" href="~/Content/StyleSheet1.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;600;800&display=swap" rel="stylesheet">
+
 <div class="row">
-    <h2>AddOrUpdateState</h2>
+    <h2 class="mainHeader normalHeader">Edit @Model.StateName State</h2>
 </div>
 
-<div class="row">
-    <div>
-
+@using (Html.BeginForm("AddOrUpdateState", "State", FormMethod.Post))
+{
+    <div class="row">
+        <div class="col-md-12 addElementContainer">
+            <div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label>Code:&nbsp;</label>@Html.TextBoxFor(s => s.StateCode, new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-3">
+                        <label>Name:&nbsp;</label>@Html.TextBoxFor(s => s.StateName, new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-3">
+                        <label>First Zip Code:&nbsp;</label>@Html.TextBoxFor(s => s.FirstZipCode, new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-3">
+                        <label>Last Zip Code:&nbsp;</label>@Html.TextBoxFor(s => s.LastZipCode, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <input type="submit" value="Submit" class="btnStyled" id="btnSubmitNewState" />
+        </div>
     </div>
-</div>
+}

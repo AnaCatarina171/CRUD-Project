@@ -8,26 +8,62 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;600;800&display=swap" rel="stylesheet">
+<script defer src="~/Content/JavaScript.js"></script>
 
 <div class="row">
     <div class="col-md-7">
         <h2 class="mainHeader">Registration List</h2>
     </div>
     <div class="col-md-2"></div>
-    <div class="col-md-3">
-        <div class="searchContainer">
-            <label class="searchLabel">Search By:</label>
-            <input type="text" name="searchText" list="searchList" />
-            <datalist id="searchList" placeholder="Search By:">
-                <option value="Code"></option>
-                <option value="Name"></option>
-                <option value="First Zip Code"></option>
-                <option value="Last Zip Code"></option>
-            </datalist>
-            <input type="text" id="searchTerm" class="searchTerm" placeholder="Search..." />
+    @using (Html.BeginForm("RegistrationList", "Registration", FormMethod.Get))
+    {
+        <div class="col-md-3">
+            <div class="searchContainer">
+                <div>Search By:</div>
+                <select name="cmbSearch" id="cmbSearch" class="cmbSearch">
+                    <option value="0">Choose an option</option>
+                    <option value="1">Product Code</option>
+                    <option value="2">Product Name</option>
+                    <option value="3">Customer ID</option>
+                    <option value="4">Customer Name</option>
+                </select>
+                <input type="text" id="searchTerm" name="searchTerm" class="searchTerm" placeholder="Search..." />
+                <div>
+                    <input type="submit" class="btnStyled smallBtn" value="GO" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<!-- Add a Registration Area -->
+<form method="post" action="/Registration/CreateRegistration" autocomplete="on" class="formAddElement">
+    <div class="row">
+        <div class="col-md-12 addElementContainer">
+            <h4>Add a Registration</h4>
+            <div>
+                <label for="productListChoice">Product:&nbsp;</label>
+                <input list="productList" id="productListChoice" name="productListChoice" class="inputStyle"/>
+                <datalist id="productList">
+                    @foreach (var prod in ViewBag.Products)
+                    {
+                        <option value="@prod.ProductCode">@prod.Name</option>
+                    }
+                </datalist>
+                <label for="customerListChoice">Customer:&nbsp;</label>
+                <input list="customerList" id="customerListChoice" name="customerListChoice" class="inputStyle"/>
+                <datalist id="customerList">
+                    @foreach (var cust in ViewBag.Customers)
+                    {
+                        <option value="@cust.Name">@cust.CustomerID</option>
+                    }
+                </datalist>
+                <label>Date:&nbsp;</label><input type="date" id="registrationDate" name="registrationDate" value="@DateTime.Today.ToShortDateString()" />
+            </div>
+            <input type="submit" value="Submit" class="btnStyled" id="btnSubmitNewTech" />
         </div>
     </div>
-</div>
+</form>
 
 <div class="row">
     <div class="col-md-12">
@@ -37,16 +73,23 @@
                     <th>Product Name</th>
                     <th>Customer Name</th>
                     <th>Registration Date</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var registration in Model)
                 {
-                    <tr>
-                        <td>@registration.Product.Name</td>
-                        <td>@registration.Customer.Name</td>
-                        <td>@registration.RegistrationDate</td>
-                    </tr>
+                <tr>
+                    <td>@registration.Product.Name</td>
+                    <td>@registration.Customer.Name</td>
+                    <td>@registration.RegistrationDate</td>
+                    <td>
+                        @Html.ActionLink("Edit", "AddOrUpdateRegistration", "Registration", 
+                       new { productCode = registration.ProductCode, customerID = registration.CustomerID}, null) |
+                        @Html.ActionLink("Delete", "Delete", "Registration",
+                       new { productCode = registration.ProductCode, customerID = registration.CustomerID }, null)
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>

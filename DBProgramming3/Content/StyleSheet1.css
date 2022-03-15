@@ -2,14 +2,21 @@
     font-family: 'Montserrat', sans-serif;
     font-size: 1.5em;
     font-weight: 400;
+    overflow-x: hidden;
 }
 
 .mainHeader {
-    text-align: right;
+    text-align: left;
     width: 100%;
-    margin: 70px 0 50px 0;
-    font-weight: 900;
+    margin: 90px 0 50px 0;
+    font-weight: 600;
+    font-size: 3em;
     text-shadow: 3px 2px 8px #dddddd;
+}
+
+.normalHeader {
+    text-align: center !important;
+    margin: 50px 0 50px 0;
 }
 
 .styled-table {
@@ -64,43 +71,123 @@ table tr:last-child td:last-child {
 }
 
 a {
-    color: #b7520d;
+    color: #000;
 }
 
-a:hover {
-    color: #581207;
+a:hover{
+    color: #fff;
 }
 
 th {
     cursor: pointer;
 }
 
-
+label{
+    font-weight: 400;
+    margin: 0 7px;
+}
 /*----- Search Container -----*/
 .searchContainer {
-    margin: 40px auto;
+    margin: 30px 0 30px 50px;
+    padding: 20px;
+    width: 210px;
     text-align: right;
+    background: #ffd3d3;
+    border-radius: 10px;
 }
 
 .searchTerm{
     margin-top: 10px;
 }
 
+.smallBtn{
+    width: 80px !important;
+    margin: 5px 0 !important;
+    border-radius: 5px;
+    background-color: #001c22 !important;
+    color: #fff;
+}
+
+/*----- Add Element Container -----*/
+.addElementContainer{
+    margin: 0 0 20px 0;
+    padding: 10px;
+    background: #dbfffb;
+    border-radius: 10px;
+    text-align: center;
+}
+h4{
+    font-weight: 600;
+    font-size: 1.5em;
+    text-align: center;
+    margin: 10px 0 20px 0;
+}
+h4::after{
+    content: '';
+    width: 95%;
+    height: 0.5px;
+    background-color: #001c22;
+    display:block;
+    margin: 10px auto;
+}
+.btnStyled{
+    margin: 20px 0 10px 0;
+    padding: 8px 0;
+    width: 100%;
+    background: transparent;
+    border: 1px solid #001c22;
+    transition: 0.5s;
+}
+input[type="text"], input[type="number"], input[type="date"], 
+.inputStyle, .cmbSearch {
+    width: 170px;
+    outline: none;
+    padding: 5px;
+    margin: 5px 0px;
+    border-radius: 4px;
+    border: 1px solid #001c22;
+    box-sizing: border-box;
+    transition: 0.3s;
+}
+input[type="text"]:focus, input[type="number"]:focus, input[type="date"]:focus, 
+.inputStyle:focus, .cmbSearch:focus{
+    border-color: #189AB4;
+    box-shadow: 0 0 8px 0 #189AB4;
+}
+.btnStyled:hover {
+    color: #fff;
+    background: #001c22;
+    border: 1px solid #001c22;
+}
+
 /*----- Tech Support Header -----*/
 .homeHeader {
     text-align: center;
     width: 100%;
-    margin: 50px 0 50px 0;
-    font-weight: 700;
-    text-shadow: 3px 2px 8px #dddddd;
+    margin: 150px 0 100px 0;
+    font-weight: 600;
 }
 p{
     text-align: center;
 }
 .regularP{
-    font-size: 1.8em;
+    margin: 50px 0;
+    font-size: 1.3em;
+    transition: 0.5s;
+}
+.regularP:hover {
+    margin: 50px 0;
+    font-size: 1.5em;
 }
 .jumbotron {
-    width: 100%;
-    background-image: linear-gradient(rgba(4,9,30,0.7),rgba(4,9,30,0.7)), url(../images/)
+    color: #fff;
+    height: 500px;
+    background-image: linear-gradient(rgba(4,9,30,0.7),rgba(4,9,30,0.7)),url(/Img/pexels-fauxels-3184454.jpg);
+    background-position: center;
+    background-size: cover;
+    margin: auto;
+    width: 100vw;
+    position: relative;
+    left: calc(-50vw + 50%);
+    border-radius: 0% !important;
 }

@@ -8,26 +8,47 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;600;800&display=swap" rel="stylesheet">
+<script defer src="~/Content/JavaScript.js"></script>
 
 <div class="row">
     <div class="col-md-7">
         <h2 class="mainHeader">Technicians List</h2>
     </div>
     <div class="col-md-2"></div>
-    <div class="col-md-3">
-        <div class="searchContainer">
-            <label class="searchLabel">Search By:</label>
-            <input type="text" name="searchText" list="searchList" />
-            <datalist id="searchList" placeholder="Search By:">
-                <option value="Code"></option>
-                <option value="Name"></option>
-                <option value="First Zip Code"></option>
-                <option value="Last Zip Code"></option>
-            </datalist>
-            <input type="text" id="searchTerm" class="searchTerm" placeholder="Search..." />
+    @using (Html.BeginForm("TechList", "Technician", FormMethod.Get))
+    {
+        <div class="col-md-3">
+            <div class="searchContainer">
+                <div>Search By:</div>
+                <select name="cmbSearch" id="cmbSearch" class="cmbSearch">
+                    <option value="0">Choose an option</option>
+                    <option value="1">ID</option>
+                    <option value="2">Name</option>
+                    <option value="3">Phone</option>
+                    <option value="4">Email</option>
+                </select>
+                <input type="text" id="searchTerm" name="searchTerm" class="searchTerm" placeholder="Search..." />
+                <div>
+                    <input type="submit" class="btnStyled smallBtn" value="GO" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<form method="post" action="/Technician/CreateTech" autocomplete="on" class="formAddElement">
+    <div class="row">
+        <div class="col-md-12 addElementContainer">
+            <h4>Add a Technician</h4>
+            <div>
+                <label>Name:&nbsp;</label><input type="text" id="txtTechName" name="txtTechName" />&emsp;
+                <label>Phone:&nbsp;</label><input type="text" id="txtTechPhone" name="txtTechPhone" />&emsp;
+                <label>Email:&nbsp;</label> <input type="text" id="txtTechEmail" name="txtTechEmail" />
+            </div>
+            <input type="submit" value="Submit" class="btnStyled" id="btnSubmitNewTech" />
         </div>
     </div>
-</div>
+</form>
 
 <div class="row">
     <div class="col-md-12">
@@ -38,17 +59,35 @@
                     <th>Name</th>
                     <th>Phone</th>
                     <th>Email</th>
+                    <th>Incidents</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var technician in Model)
                 {
-                    <tr>
-                        <td>@technician.TechID</td>
-                        <td>@technician.Name</td>
-                        <td>@technician.Phone</td>
-                        <td>@technician.Email</td>
-                    </tr>
+                <tr>
+                    <td>@technician.TechID</td>
+                    <td>@technician.Name</td>
+                    <td>@technician.Phone</td>
+                    <td>@technician.Email</td>
+                    @if (@technician.Incidents.Count() > 0)
+                    {
+                        <td>
+                            @technician.Incidents.Count()
+                            <br />
+                            @Html.ActionLink("Go To Invoices", "TechInvoices", "Invoices", new { id = technician.TechID }, null)
+                        </td>
+                    }
+                    else
+                    {
+                        <td>No Invoices</td>
+                    }
+                    <td>
+                        @Html.ActionLink("Edit", "AddOrUpdateTech", "Technician", new { id = technician.TechID }, null) |
+                        @Html.ActionLink("Delete", "Delete", "Technician", new { id = technician.TechID }, new { id = "deleteLink" })
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>
