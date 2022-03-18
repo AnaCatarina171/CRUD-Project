@@ -4,7 +4,7 @@
     ViewBag.Title = "AddOrUpdateRegistration";
 }
 
-<link rel="stylesheet" href="~/Content/StyleSheet1.css" />
+<link rel="stylesheet" href="~/Content/AddEditPage.css" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;600;800&display=swap" rel="stylesheet">
@@ -19,22 +19,22 @@
         <div class="col-md-12 addElementContainer">
             <div>
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <label>Product:&nbsp;</label>
 
                         @Html.DropDownListFor(model => model.ProductCode, new SelectList(ViewBag.Products, "ProductCode", "Name"),
                     new { @class = "form-control" })
 
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <label>Customer:&nbsp;</label>
                             @Html.DropDownListFor(model => model.CustomerID, new SelectList(ViewBag.Customers, "CustomerID", "Name"),
                         new { @class = "form-control" })
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <label>Date:&nbsp;</label>
                         @Html.TextBoxFor(model => model.RegistrationDate,
-                            new { @class = "form-control", type = "date", @Value = DateTime.Today.ToShortDateString() })
+                            new { @class = "form-control", type = "date" , @Value = Model.RegistrationDate.ToShortDateString() })
                     </div>
                 </div>
             </div>

@@ -1,0 +1,52 @@
+﻿@model DBProgramming3.Models.Customer
+
+@{
+    ViewBag.Title = "AddOrUpdateCustomer";
+}
+
+<link rel="stylesheet" href="~/Content/AddEditPage.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;600;800&display=swap" rel="stylesheet">
+
+<div class="row">
+    <h2 class="mainHeader normalHeader">Edit Customer @Model.Name</h2>
+</div>
+
+@using (Html.BeginForm("AddOrUpdateCustomer", "Customer", FormMethod.Post))
+{
+    @Html.HiddenFor(c => c.CustomerID);
+    <div class="row">
+        <div class="col-md-12 addElementContainer">
+            <div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label>Name:&nbsp;</label>@Html.TextBoxFor(c => c.Name, new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-3">
+                        <label>Phone:&nbsp;</label>@Html.TextBoxFor(c => c.Phone, new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-3">
+                        <label>Email:&nbsp;</label>@Html.TextBoxFor(c => c.Email, new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-3">
+                        <label>State:&nbsp;</label>@Html.TextBoxFor(c => c.State, new { @class = "form-control" })
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-3">
+                        <label>City:&nbsp;</label>@Html.TextBoxFor(c => c.City, new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-3">
+                        <label>Address:&nbsp;</label>@Html.TextBoxFor(c => c.Address, new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-3">
+                        <label>Zip Code:&nbsp;</label>@Html.TextBoxFor(c => c.ZipCode, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <input type="submit" value="Submit" class="btnStyled" id="btnSubmitNewState" />
+        </div>
+    </div>
+}

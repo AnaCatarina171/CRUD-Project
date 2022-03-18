@@ -179,6 +179,7 @@
     <Content Include="App_Data\TechSupport_log.ldf">
       <DependentUpon>TechSupport.mdf</DependentUpon>
     </Content>
+    <Content Include="Content\AddEditPage.css" />
     <Content Include="Content\addressAPI\mainScript.js" />
     <Content Include="Content\addressAPI\mainStyle.css" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -247,6 +248,9 @@
     <Content Include="Views\Test\Index.cshtml" />
     <Content Include="Views\Technician\AddOrUpdateTech.cshtml" />
     <Content Include="Views\Registration\AddOrUpdateRegistration.cshtml" />
+    <Content Include="Views\Product\AddOrUpdateProduct.cshtml" />
+    <Content Include="Views\Customer\AddOrUpdateCustomer.cshtml" />
+    <Content Include="Views\Incident\AddOrUpdateIncident.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

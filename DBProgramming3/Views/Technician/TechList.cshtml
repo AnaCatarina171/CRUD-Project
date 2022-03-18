@@ -76,12 +76,12 @@
                         <td>
                             @technician.Incidents.Count()
                             <br />
-                            @Html.ActionLink("Go To Invoices", "TechInvoices", "Invoices", new { id = technician.TechID }, null)
+                            @Html.ActionLink("Go To Incidents", "TechInvoices", "Invoices", new { id = technician.TechID }, null)
                         </td>
                     }
                     else
                     {
-                        <td>No Invoices</td>
+                        <td>No Incidents</td>
                     }
                     <td>
                         @Html.ActionLink("Edit", "AddOrUpdateTech", "Technician", new { id = technician.TechID }, null) |

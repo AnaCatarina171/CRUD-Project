@@ -29,7 +29,7 @@ namespace DBProgramming3.Views
                         .Where(t => t.TechID.ToString().IndexOf(searchTerm) != -1)
                         .ToList();
                 }
-                if (value == 2)
+                if (value == 2 || value == 0)
                 {
                     technicians = technicians
                         .Where(t => t.Name.ToLower().IndexOf(searchTerm) != -1)

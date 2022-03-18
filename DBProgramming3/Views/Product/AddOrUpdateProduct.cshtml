@@ -1,0 +1,40 @@
+﻿@model DBProgramming3.Models.Product
+
+@{
+    ViewBag.Title = "AddOrUpdateProduct";
+}
+
+<link rel="stylesheet" href="~/Content/AddEditPage.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;600;800&display=swap" rel="stylesheet">
+
+<div class="row">
+    <h2 class="mainHeader normalHeader">Edit @Model.Name Product</h2>
+</div>
+
+@using (Html.BeginForm("AddOrUpdateProduct", "Product", FormMethod.Post))
+{
+<div class="row">
+    <div class="col-md-12 addElementContainer">
+        <div>
+            <div class="row">
+                <div class="col-md-3">
+                    <label>Code:&nbsp;</label>@Html.TextBoxFor(p => p.ProductCode, new { @class = "form-control" })
+                </div>
+                <div class="col-md-3">
+                    <label>Name:&nbsp;</label>@Html.TextBoxFor(p => p.Name, new { @class = "form-control" })
+                </div>
+                <div class="col-md-3">
+                    <label>Version:&nbsp;</label>@Html.TextBoxFor(p => p.Version, new { @class = "form-control" })
+                </div>
+                <div class="col-md-3">
+                    <label>Last Zip Code:&nbsp;</label>@Html.TextBoxFor(p => p.ReleaseDate, new { @class = "form-control",
+                                                            type = "date",@Value = DateTime.Today.ToShortDateString()})
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="submit" value="Submit" class="btnStyled" id="btnSubmitNewState" />
+</div>
+}

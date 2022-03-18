@@ -1,0 +1,91 @@
+﻿body {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.5em;
+    font-weight: 400;
+    overflow-x: hidden;
+}
+
+.mainHeader {
+    text-align: left;
+    width: 100%;
+    margin: 90px 0 50px 0;
+    font-weight: 600;
+    font-size: 3em;
+    text-shadow: 3px 2px 8px #dddddd;
+}
+
+.normalHeader {
+    text-align: center !important;
+    margin: 50px 0 50px 0;
+}
+
+a {
+    color: #000;
+}
+
+    a:hover {
+        color: #fff;
+    }
+
+label {
+    margin: auto;
+}
+
+.addElementContainer {
+    margin: 0 0 20px 0;
+    padding: 10px;
+    background: #dbfffb;
+    border-radius: 10px;
+    text-align: center;
+}
+
+h4 {
+    font-weight: 600;
+    font-size: 1.5em;
+    text-align: center;
+    margin: 10px 0 20px 0;
+}
+
+    h4::after {
+        content: '';
+        width: 95%;
+        height: 0.5px;
+        background-color: #001c22;
+        display: block;
+        margin: 10px auto;
+    }
+
+.btnStyled {
+    margin: 20px auto;
+    padding: 8px 0;
+    width: 100%;
+    background: transparent;
+    border: 1px solid #001c22;
+    transition: 0.5s;
+    display: block;
+}
+
+input[type="text"], input[type="number"], input[type="date"],
+input[list], .inputStyle, .cmbSearch {
+    width: 170px;
+    outline: none;
+    padding: 5px;
+    margin: 5px auto;
+    border-radius: 4px;
+    border: 1px solid #001c22;
+    box-sizing: border-box;
+    transition: 0.3s;
+    display: block;
+}
+
+    input[type="text"]:focus, input[type="number"]:focus, input[type="date"]:focus,
+    .inputStyle:focus, .cmbSearch:focus {
+        border-color: #189AB4;
+        box-shadow: 0 0 8px 0 #189AB4;
+    }
+
+.btnStyled:hover {
+    color: #fff;
+    background: #001c22;
+    border: 1px solid #001c22;
+}

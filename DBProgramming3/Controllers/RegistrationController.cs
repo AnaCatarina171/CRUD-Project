@@ -32,7 +32,7 @@ namespace DBProgramming3.Views
                         .Where(r => r.Product.ProductCode.ToLower().IndexOf(searchTerm) != -1)
                         .ToList();
                 }
-                if (value == 2)
+                if (value == 2 || value == 0)
                 {
                     registrations = registrations
                         .Where(r => r.Product.Name.ToLower().IndexOf(searchTerm) != -1)
@@ -62,16 +62,19 @@ namespace DBProgramming3.Views
 
             var context = new TechSupportEntities();
 
-            Customer customer = context.Customers.FirstOrDefault(c => c.Name == customerListChoice);
-            int customerID = customer.CustomerID;
             try
             {
-                if (productListChoice == "" || customerListChoice == "" || registrationDate == null)
+                Customer customer = context.Customers.FirstOrDefault(c => c.Name == customerListChoice);
+
+                if (productListChoice == "" || customerListChoice == "" || 
+                    registrationDate == null || customer == null)
                 {
                     message = "Please, provide all the necessary information.";
                 }
                 else
-                {
+                { 
+                    int customerID = customer.CustomerID;
+
                     Registration registration = new Registration
                     {
                         ProductCode = productListChoice,

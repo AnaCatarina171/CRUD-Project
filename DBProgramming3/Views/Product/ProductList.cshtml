@@ -8,36 +8,58 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;600;800&display=swap" rel="stylesheet">
+<script defer src="~/Content/JavaScript.js"></script>
 
 <div class="row">
     <div class="col-md-7">
         <h2 class="mainHeader">Products List</h2>
     </div>
     <div class="col-md-2"></div>
-    <div class="col-md-3">
-        <div class="searchContainer">
-            <label class="searchLabel">Search By:</label>
-            <input type="text" name="searchText" list="searchList" />
-            <datalist id="searchList" placeholder="Search By:">
-                <option value="Code"></option>
-                <option value="Name"></option>
-                <option value="First Zip Code"></option>
-                <option value="Last Zip Code"></option>
-            </datalist>
-            <input type="text" id="searchTerm" class="searchTerm" placeholder="Search..." />
+    @using (Html.BeginForm("ProductList", "Product", FormMethod.Get))
+    {
+        <div class="col-md-3">
+            <div class="searchContainer">
+                <div>Search By:</div>
+                <select name="cmbSearch" id="cmbSearch" class="cmbSearch">
+                    <option value="0">Choose an option</option>
+                    <option value="1">Code</option>
+                    <option value="2">Name</option>
+                </select>
+                <input type="text" id="searchTerm" name="searchTerm" class="searchTerm" placeholder="Search..." />
+                <div>
+                    <input type="submit" class="btnStyled smallBtn" value="GO" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<form method="post" action="/Product/CreateProduct" autocomplete="on" class="formAddElement">
+    <div class="row">
+        <div class="col-md-12 addElementContainer">
+            <h4>Add a Product</h4>
+            <div>
+                <label>Code:&nbsp;</label><input type="text" id="txtProdCode" name="txtProdCode" />&emsp;
+                <label>Name:&nbsp;</label><input type="text" id="txtProdName" name="txtProdName" />&emsp;
+                <label>Version:&nbsp;</label><input type="text" id="txtProdVersion" name="txtProdVersion" />&emsp;
+                <label>Release Date:&nbsp;</label><input type="date" id="prodReleaseDate" name="prodReleaseDate" value="@DateTime.Today.ToShortDateString()" />
+            </div>
+            <input type="submit" value="Submit" class="btnStyled" id="btnSubmitNewState" />
         </div>
     </div>
-</div>
+</form>
 
 <div class="row">
     <div class="col-md-12">
-        <table id="stateList" class="styled-table">
+        <table id="productList" class="styled-table">
             <thead>
                 <tr>
                     <th>Code</th>
                     <th>Name</th>
                     <th>Version</th>
                     <th>Release Date</th>
+                    <th># Incidents</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -47,7 +69,23 @@
                         <td>@product.ProductCode</td>
                         <td>@product.Name</td>
                         <td>@product.Version</td>
-                        <td>@product.ReleaseDate</td>
+                        <td>@product.ReleaseDate.ToShortDateString()</td>
+                        @if (@product.Incidents.Count() > 0)
+                        {
+                            <td>
+                                <strong>@product.Incidents.Count()</strong> |
+                                @Html.ActionLink("Go To Incidents", "ProductIncidents", "Incidents", new { code = product.ProductCode }, null)
+                            </td>
+                        }
+                        else
+                        {
+                            <td>No Incidents</td>
+                        }
+
+                        <td>
+                            @Html.ActionLink("Edit", "AddOrUpdateProduct", "Product", new { code = product.ProductCode }, null) |
+                            @Html.ActionLink("Delete", "Delete", "Product", new { code = product.ProductCode }, new { @class = "deleteLink" })
+                        </td>
                     </tr>
                 }
             </tbody>

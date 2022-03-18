@@ -14,6 +14,12 @@ namespace DBProgramming3
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "DefaultTwoParameters",
+                url: "{controller}/{action}/{id}/{code}",
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional, code = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }

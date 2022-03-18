@@ -33,7 +33,7 @@ namespace DBProgramming3.Views
                         .Where(s => s.StateCode.ToLower().IndexOf(searchTerm) != -1)
                         .ToList();
                 }
-                if (value == 2)
+                if (value == 2 || value == 0)
                 {
                     states = states
                         .Where(s => s.StateName.ToLower().IndexOf(searchTerm) != -1)
@@ -131,19 +131,29 @@ namespace DBProgramming3.Views
         {
             var context = new TechSupportEntities();
 
+            string message = "";
+
             try
             {
                 State stateToRemove = context.States.FirstOrDefault(s => s.StateCode == code);
 
                 context.States.Remove(stateToRemove);
                 context.SaveChanges();
+
+                message = "State of " + stateToRemove.StateName + " was deleted.";
             }
             catch (Exception ex)
             {
-                throw;
+                message = "Error: " + ex.Message;
             }
 
             return Redirect("/State/StateList");
+
+            /*return new JsonResult()
+            {
+                Data = new { message },
+                JsonRequestBehavior = JsonRequestBehavior.DenyGet
+            };*/
         }
     }
 }

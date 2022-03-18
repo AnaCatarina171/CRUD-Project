@@ -16,21 +16,20 @@
     });
 });
 
-$("#deleteLink").click(function (e) {
+/*$(".deleteLink").click(function (e) {
 
     e.preventDefault();
+
+    var link = $(this);
+    var actionUrl = link.attr('action');
+
     $.ajax({
-        url: "<where to post>",
+        url: actionUrl,
         type: "DELETE",//type of posting the data
-        data: "<what to post>",
         success: function (data) {
-            alert("State successfuly deleted");
+            alert(data.message);
             location.reload();
-        },
-        error: function(xhr, ajaxOptions, thrownError){
-            //what to do in error
-        },
-        timeout : 15000//timeout of the ajax call
+        }
   });
 
-});
+});*/

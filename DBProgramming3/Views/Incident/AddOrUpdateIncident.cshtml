@@ -1,0 +1,72 @@
+﻿@model DBProgramming3.Models.Incident
+
+@{
+    ViewBag.Title = "AddOrUpdateIncident";
+}
+
+<link rel="stylesheet" href="~/Content/AddEditPage.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;600;800&display=swap" rel="stylesheet">
+
+<div class="row">
+    <h2 class="mainHeader normalHeader">Edit Incident # @Model.IncidentID</h2>
+</div>
+
+@using (Html.BeginForm("AddOrUpdateIncident", "Incident", FormMethod.Post))
+{
+    @Html.HiddenFor(model => model.IncidentID);
+    <div class="row">
+        <div class="col-md-12 addElementContainer">
+            <div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Title:&nbsp;</label>
+                        @Html.TextBoxFor(model => model.Title, new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-4">
+                        <label>Customer:&nbsp;</label>
+                        @Html.DropDownListFor(model => model.CustomerID, new SelectList(ViewBag.Customers, "CustomerID", "Name"),
+                    new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-4">
+                        <label>Techinician:&nbsp;</label>
+                        @Html.DropDownListFor(model => model.TechID, new SelectList(ViewBag.Technicians, "TechID", "Name"),
+                    new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Product:&nbsp;</label>
+                        @Html.DropDownListFor(model => model.ProductCode, new SelectList(ViewBag.Products, "ProductCode", "Name"),
+                    new { @class = "form-control" })
+
+                    </div>
+                    <div class="col-md-4">
+                        <label>Date Opened:&nbsp;</label>
+                        @Html.TextBoxFor(model => model.DateOpened, new { @class = "form-control", type = "date", @Value = Model.DateOpened.ToShortDateString() })
+                    </div>
+                    <div class="col-md-4">
+                        <label>Date Closed:&nbsp;</label>
+                        @if (Model.DateClosed.HasValue)
+                        {
+                            @Html.TextBoxFor(model => model.DateClosed, new { @class = "form-control", type = "date", @Value = Model.DateClosed.ToString().Substring(0, 10) })
+                        }
+                        else
+                        {
+                            @Html.TextBoxFor(model => model.DateClosed, new { @class = "form-control", type = "date" })
+
+                        }
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>Description:&nbsp;</label>
+                        @Html.TextBoxFor(model => model.Description, new { @class = "form-control"})
+                    </div>
+                </div>
+            </div>
+            <input type="submit" value="Submit" class="btnStyled" id="btnSubmitNewState" />
+        </div>
+    </div>
+}

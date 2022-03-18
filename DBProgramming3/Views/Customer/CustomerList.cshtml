@@ -15,20 +15,47 @@
         <h2 class="mainHeader">Customers List</h2>
     </div>
     <div class="col-md-2"></div>
-    <div class="col-md-3">
-        <div class="searchContainer">
-            <label class="searchLabel">Search By:</label>
-            <input type="text" name="searchText" list="searchList" />
-            <datalist id="searchList" placeholder="Search By:">
-                <option value="ID"></option>
-                <option value="Name"></option>
-                <option value="Phone"></option>
-                <option value="Email"></option>
-            </datalist>
-            <input type="text" id="searchTerm" class="searchTerm" placeholder="Search..." />
+    @using (Html.BeginForm("CustomerList", "Customer", FormMethod.Get))
+    {
+        <div class="col-md-3">
+            <div class="searchContainer">
+                <div>Search By:</div>
+                <select name="cmbSearch" id="cmbSearch" class="cmbSearch">
+                    <option value="0">Choose an option</option>
+                    <option value="1">ID</option>
+                    <option value="2">Name</option>
+                    <option value="3">Phone</option>
+                    <option value="4">Email</option>
+                    <option value="5">State</option>
+                </select>
+                <input type="text" id="searchTerm" name="searchTerm" class="searchTerm" placeholder="Search..." />
+                <div>
+                    <input type="submit" class="btnStyled smallBtn" value="GO" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<form method="post" action="/Customer/CreateCustomer" autocomplete="on" class="formAddElement">
+    <div class="row">
+        <div class="col-md-12 addElementContainer">
+            <h4>Add a Customer</h4>
+            <div class="row">
+                <label>Name:&nbsp;</label><input type="text" id="txtCustomerName" name="txtCustomerName" />&emsp;
+                <label>Phone:&nbsp;</label><input type="text" id="txtCustomerPhone" name="txtCustomerPhone" />&emsp;
+                <label>Email:&nbsp;</label><input type="text" id="txtCustomerEmail" name="txtCustomerEmail" />&emsp;
+                <label>State:&nbsp;</label> <input type="text" id="txtCustomerState" name="txtCustomerState" />
+            </div>
+            <div class="row inputsRow">
+                <label>City:&nbsp;</label><input type="text" id="txtCustomerCity" name="txtCustomerCity" />&emsp;
+                <label>Address:&nbsp;</label><input type="text" id="txtCustomerAddress" name="txtCustomerAddress" />&emsp;
+                <label>Zip Code:&nbsp;</label><input type="text" id="txtCustomerZipCode" name="txtCustomerZipCode" />&emsp;
+            </div>
+            <input type="submit" value="Submit" class="btnStyled" id="btnSubmitNewState" />
         </div>
     </div>
-</div>
+</form>
 
 <div class="row">
     <div class="col-md-12">
@@ -40,22 +67,27 @@
                     <th>Phone</th>
                     <th>Email</th>
                     <th>State</th>
-                    <th>Incidents</th>
-                    <th>Registrations</th>
+                    <th># Incidents</th>
+                    <th># Registrations</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var customer in Model)
                 {
-                <tr>
-                    <td>@customer.CustomerID</td>
-                    <td>@customer.Name</td>
-                    <td>@customer.Phone</td>
-                    <td>@customer.Email</td>
-                    <td>@customer.State</td>
-                    <td>@customer.Incidents.Count()</td>
-                    <td>@customer.Registrations.Count()</td>
-                </tr>
+                    <tr>
+                        <td>@customer.CustomerID</td>
+                        <td>@customer.Name</td>
+                        <td>@customer.Phone</td>
+                        <td>@customer.Email</td>
+                        <td>@customer.State</td>
+                        <td>@customer.Incidents.Count()</td>
+                        <td>@customer.Registrations.Count()</td>
+                        <td>
+                            @Html.ActionLink("Edit", "AddOrUpdateCustomer", "Customer", new { id = customer.CustomerID }, null) |
+                            @Html.ActionLink("Delete", "Delete", "Customer", new { id = customer.CustomerID }, new { @class = "deleteLink" })
+                         </td>
+                    </tr>
                 }
             </tbody>
         </table>

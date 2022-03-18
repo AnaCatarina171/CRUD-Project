@@ -37,28 +37,28 @@
 </div>
 
 <!-- Add a Registration Area -->
-<form method="post" action="/Registration/CreateRegistration" autocomplete="on" class="formAddElement">
+<form method="post" action="/Registration/CreateRegistration" class="formAddElement">
     <div class="row">
         <div class="col-md-12 addElementContainer">
             <h4>Add a Registration</h4>
             <div>
                 <label for="productListChoice">Product:&nbsp;</label>
-                <input list="productList" id="productListChoice" name="productListChoice" class="inputStyle"/>
+                <input list="productList" id="productListChoice" name="productListChoice" class="inputStyle" />
                 <datalist id="productList">
                     @foreach (var prod in ViewBag.Products)
                     {
                         <option value="@prod.ProductCode">@prod.Name</option>
                     }
                 </datalist>
-                <label for="customerListChoice">Customer:&nbsp;</label>
-                <input list="customerList" id="customerListChoice" name="customerListChoice" class="inputStyle"/>
+                &nbsp;&nbsp;<label for="customerListChoice">Customer:&nbsp;</label>
+                <input list="customerList" id="customerListChoice" name="customerListChoice" class="inputStyle" />
                 <datalist id="customerList">
                     @foreach (var cust in ViewBag.Customers)
                     {
                         <option value="@cust.Name">@cust.CustomerID</option>
                     }
                 </datalist>
-                <label>Date:&nbsp;</label><input type="date" id="registrationDate" name="registrationDate" value="@DateTime.Today.ToShortDateString()" />
+                &nbsp;&nbsp;<label>Date:&nbsp;</label><input type="date" id="registrationDate" name="registrationDate" value="@DateTime.Today.ToShortDateString()" />
             </div>
             <input type="submit" value="Submit" class="btnStyled" id="btnSubmitNewTech" />
         </div>
@@ -82,7 +82,7 @@
                 <tr>
                     <td>@registration.Product.Name</td>
                     <td>@registration.Customer.Name</td>
-                    <td>@registration.RegistrationDate</td>
+                    <td>@registration.RegistrationDate.ToShortDateString()</td>
                     <td>
                         @Html.ActionLink("Edit", "AddOrUpdateRegistration", "Registration", 
                        new { productCode = registration.ProductCode, customerID = registration.CustomerID}, null) |
