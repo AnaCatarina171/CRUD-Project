@@ -39,10 +39,28 @@
         <div class="col-md-12 addElementContainer">
             <h4>Add a Product</h4>
             <div>
-                <label>Code:&nbsp;</label><input type="text" id="txtProdCode" name="txtProdCode" />&emsp;
-                <label>Name:&nbsp;</label><input type="text" id="txtProdName" name="txtProdName" />&emsp;
-                <label>Version:&nbsp;</label><input type="text" id="txtProdVersion" name="txtProdVersion" />&emsp;
-                <label>Release Date:&nbsp;</label><input type="date" id="prodReleaseDate" name="prodReleaseDate" value="@DateTime.Today.ToShortDateString()" />
+                <div class="row">
+                    <div class="col-md-3">
+                        <label>Code:&nbsp;</label>
+                        <br />
+                        <input type="text" id="txtProdCode" name="txtProdCode" />
+                    </div>
+                    <div class="col-md-3">
+                        <label>Name:&nbsp;</label>
+                        <br />
+                        <input type="text" id="txtProdName" name="txtProdName" />
+                    </div>
+                    <div class="col-md-3">
+                        <label>Version:&nbsp;</label>
+                        <br />
+                        <input type="text" id="txtProdVersion" name="txtProdVersion" />
+                    </div>
+                    <div class="col-md-3">
+                        <label>Release Date:&nbsp;</label>
+                        <br />
+                        <input type="date" id="prodReleaseDate" name="prodReleaseDate" value="@DateTime.Today.ToShortDateString()" />
+                    </div>
+                </div>
             </div>
             <input type="submit" value="Submit" class="btnStyled" id="btnSubmitNewState" />
         </div>
@@ -59,36 +77,51 @@
                     <th>Version</th>
                     <th>Release Date</th>
                     <th># Incidents</th>
+                    <th># Registrations</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var product in Model)
                 {
-                    <tr>
-                        <td>@product.ProductCode</td>
-                        <td>@product.Name</td>
-                        <td>@product.Version</td>
-                        <td>@product.ReleaseDate.ToShortDateString()</td>
-                        @if (@product.Incidents.Count() > 0)
-                        {
-                            <td>
-                                <strong>@product.Incidents.Count()</strong> |
-                                @Html.ActionLink("Go To Incidents", "ProductIncidents", "Incidents", new { code = product.ProductCode }, null)
-                            </td>
-                        }
-                        else
-                        {
-                            <td>No Incidents</td>
-                        }
-
-                        <td>
-                            @Html.ActionLink("Edit", "AddOrUpdateProduct", "Product", new { code = product.ProductCode }, null) |
-                            @Html.ActionLink("Delete", "Delete", "Product", new { code = product.ProductCode }, new { @class = "deleteLink" })
-                        </td>
-                    </tr>
+                <tr>
+                    <td>@product.ProductCode</td>
+                    <td>@product.Name</td>
+                    <td>@product.Version</td>
+                    <td>@product.ReleaseDate.ToShortDateString()</td>
+                    <td>
+                        <strong>@product.Incidents.Count()</strong>
+                    </td>
+                    <td>
+                        <strong>@product.Registrations.Count()</strong>
+                    </td>
+                    <td>
+                    <div class="detailsContainer">
+                        @Html.ActionLink("Details", "AddOrUpdateProduct", "Product", new { code = product.ProductCode }, new { @class = "detailsBtn" })
+                    </div>
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>
     </div>
 </div>
+
+<nav aria-label="...">
+    <ul class="pagination">
+    </ul>
+</nav>
+
+<script>
+    window.addEventListener('load', function () {
+        var page = parseInt('@ViewBag.page');
+        var top = parseInt('@ViewBag.top');
+        var totalItems = parseInt('@ViewBag.totalItems');
+        var searchTerm = ('@ViewBag.searchTerm');
+        var cmbSearch = parseInt('@ViewBag.cmbSearch');
+
+        var baseURL = '/Product/ProductList';
+
+        createPaging(page, top, totalItems, baseURL, searchTerm, cmbSearch);
+    });
+</script>

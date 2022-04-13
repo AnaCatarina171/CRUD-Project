@@ -8,65 +8,83 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+<script defer src="~/Content/JavaScript.js"></script>
 
-<div class="row">
-    <h2 class="mainHeader normalHeader">Edit Incident # @Model.IncidentID</h2>
+<div class="returnContainer row">
+    <a href="/Incident/IncidentList" class="returnLink"><i class="fa fa-arrow-left"></i> &nbsp; Return to Incidents</a>
 </div>
 
-@using (Html.BeginForm("AddOrUpdateIncident", "Incident", FormMethod.Post))
+<div class="row">
+    <h2 class="mainHeader">Edit Incident # @Model.IncidentID</h2>
+</div>
+
+@using (Html.BeginForm("AddOrUpdateIncident", "Incident", FormMethod.Post, new { @class = "formEditElement" }))
 {
     @Html.HiddenFor(model => model.IncidentID);
-    <div class="row">
-        <div class="col-md-12 addElementContainer">
-            <div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <label>Title:&nbsp;</label>
-                        @Html.TextBoxFor(model => model.Title, new { @class = "form-control" })
-                    </div>
-                    <div class="col-md-4">
-                        <label>Customer:&nbsp;</label>
-                        @Html.DropDownListFor(model => model.CustomerID, new SelectList(ViewBag.Customers, "CustomerID", "Name"),
-                    new { @class = "form-control" })
-                    </div>
-                    <div class="col-md-4">
-                        <label>Techinician:&nbsp;</label>
-                        @Html.DropDownListFor(model => model.TechID, new SelectList(ViewBag.Technicians, "TechID", "Name"),
-                    new { @class = "form-control" })
-                    </div>
+<div class="row">
+    <div class="col-md-12 addElementContainer">
+        <div>
+            <div class="inputsRow row">
+                <div class="col-md-4">
+                    <label>Title:&nbsp;</label>
+                    @Html.TextBoxFor(model => model.Title, new { @class = "form-control" })
                 </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <label>Product:&nbsp;</label>
-                        @Html.DropDownListFor(model => model.ProductCode, new SelectList(ViewBag.Products, "ProductCode", "Name"),
-                    new { @class = "form-control" })
+                <div class="col-md-4">
+                    <label>Customer:&nbsp;</label>
+                    @Html.DropDownListFor(model => model.CustomerID, new SelectList(ViewBag.Customers, "CustomerID", "Name"),
+                new { @class = "form-control" })
+                </div>
+                <div class="col-md-4">
+                    <label>Techinician:&nbsp;</label>
+                    @Html.DropDownListFor(model => model.TechID, new SelectList(ViewBag.Technicians, "TechID", "Name"),
+                new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="inputsRow row">
+                <div class="col-md-4">
+                    <label>Product:&nbsp;</label>
+                    @Html.DropDownListFor(model => model.ProductCode, new SelectList(ViewBag.Products, "ProductCode", "Name"),
+                new { @class = "form-control" })
 
-                    </div>
-                    <div class="col-md-4">
-                        <label>Date Opened:&nbsp;</label>
-                        @Html.TextBoxFor(model => model.DateOpened, new { @class = "form-control", type = "date", @Value = Model.DateOpened.ToShortDateString() })
-                    </div>
-                    <div class="col-md-4">
+                </div>
+                <div class="col-md-4">
+                    <label>Date Opened:&nbsp;</label>
+                    @Html.TextBoxFor(model => model.DateOpened, new { @class = "form-control", type = "date", @Value = Model.DateOpened.ToShortDateString() })
+                </div>
+                <div class="col-md-4">
+                    <div>
                         <label>Date Closed:&nbsp;</label>
                         @if (Model.DateClosed.HasValue)
                         {
-                            @Html.TextBoxFor(model => model.DateClosed, new { @class = "form-control", type = "date", @Value = Model.DateClosed.ToString().Substring(0, 10) })
+                            @Html.TextBoxFor(model => model.DateClosed, new { @id = "inputDateClosed", @class = "form-control", type = "date", @Value = Model.DateClosed.ToString().Substring(0, 10) })
                         }
                         else
                         {
-                            @Html.TextBoxFor(model => model.DateClosed, new { @class = "form-control", type = "date" })
-
+                            @Html.TextBoxFor(model => model.DateClosed, new { @id = "inputDateClosed", @class = "form-control", type = "date"})
                         }
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <label>Description:&nbsp;</label>
-                        @Html.TextBoxFor(model => model.Description, new { @class = "form-control"})
+                    <div>
+                        <label>Still Open: &nbsp;<input type="checkbox" id="cboStillOpen" name="cboStillOpen" onclick="isStillOpen()"/></label>
                     </div>
                 </div>
             </div>
-            <input type="submit" value="Submit" class="btnStyled" id="btnSubmitNewState" />
+            <div class="inputsRow row">
+                <div class="col-md-12">
+                    <label>Description:&nbsp;</label>
+                    <div>
+                        @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @id = "descriptionArea" })
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+    <input type="submit" value="Submit" class="btnStyled" id="btnSubmitNewIncident" />
+</div>
 }
+
+<form method="post" action="/Incident/Delete" class="formDeleteElement">
+    <input type="number" id="txtIncidentId" name="txtIncidentId" value="@Model.IncidentID" style="display:none" />
+    <input type="submit" value="Delete Incident" class="deleteBtnStyled" />
+</form>
+

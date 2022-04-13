@@ -41,24 +41,34 @@
     <div class="row">
         <div class="col-md-12 addElementContainer">
             <h4>Add a Registration</h4>
-            <div>
-                <label for="productListChoice">Product:&nbsp;</label>
-                <input list="productList" id="productListChoice" name="productListChoice" class="inputStyle" />
-                <datalist id="productList">
-                    @foreach (var prod in ViewBag.Products)
-                    {
-                        <option value="@prod.ProductCode">@prod.Name</option>
-                    }
-                </datalist>
-                &nbsp;&nbsp;<label for="customerListChoice">Customer:&nbsp;</label>
-                <input list="customerList" id="customerListChoice" name="customerListChoice" class="inputStyle" />
-                <datalist id="customerList">
-                    @foreach (var cust in ViewBag.Customers)
-                    {
-                        <option value="@cust.Name">@cust.CustomerID</option>
-                    }
-                </datalist>
-                &nbsp;&nbsp;<label>Date:&nbsp;</label><input type="date" id="registrationDate" name="registrationDate" value="@DateTime.Today.ToShortDateString()" />
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="productListChoice">Product:&nbsp;</label>
+                    <br />
+                    <input list="productList" id="productListChoice" name="productListChoice" class="inputStyle" />
+                    <datalist id="productList">
+                        @foreach (var prod in ViewBag.Products)
+                        {
+                            <option value="@prod.ProductCode">@prod.Name</option>
+                        }
+                    </datalist>
+                </div>
+                <div class="col-md-4">
+                    <label for="customerListChoice">Customer:&nbsp;</label>
+                    <br />
+                    <input list="customerList" id="customerListChoice" name="customerListChoice" class="inputStyle" />
+                    <datalist id="customerList">
+                        @foreach (var cust in ViewBag.Customers)
+                        {
+                            <option value="@cust.Name">@cust.CustomerID</option>
+                        }
+                    </datalist>
+                </div>
+                <div class="col-md-4">
+                    <label>Date:&nbsp;</label>
+                    <br />
+                    <input type="date" id="registrationDate" name="registrationDate" value="@DateTime.Today.ToShortDateString()" />
+                </div>
             </div>
             <input type="submit" value="Submit" class="btnStyled" id="btnSubmitNewTech" />
         </div>
@@ -79,19 +89,40 @@
             <tbody>
                 @foreach (var registration in Model)
                 {
-                <tr>
-                    <td>@registration.Product.Name</td>
-                    <td>@registration.Customer.Name</td>
-                    <td>@registration.RegistrationDate.ToShortDateString()</td>
-                    <td>
-                        @Html.ActionLink("Edit", "AddOrUpdateRegistration", "Registration", 
-                       new { productCode = registration.ProductCode, customerID = registration.CustomerID}, null) |
-                        @Html.ActionLink("Delete", "Delete", "Registration",
-                       new { productCode = registration.ProductCode, customerID = registration.CustomerID }, null)
-                    </td>
-                </tr>
+                    <tr>
+                        <td>@registration.Product.Name</td>
+                        <td>
+                            @Html.ActionLink(registration.Customer.Name, "AddOrUpdateCustomer", "Customer", new { id = registration.CustomerID }, null)
+                        </td>
+                        <td>@registration.RegistrationDate.ToShortDateString()</td>
+                        <td>
+                            <div class="detailsContainer">
+                                @Html.ActionLink("Details", "AddOrUpdateRegistration", "Registration",
+                           new { productCode = registration.ProductCode, customerID = registration.CustomerID }, new { @class = "detailsBtn" })
+                            </div>
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>
     </div>
 </div>
+
+<nav aria-label="...">
+    <ul class="pagination">
+    </ul>
+</nav>
+
+<script>
+    window.addEventListener('load', function () {
+        var page = parseInt('@ViewBag.page');
+        var top = parseInt('@ViewBag.top');
+        var totalItems = parseInt('@ViewBag.totalItems');
+        var searchTerm = ('@ViewBag.searchTerm');
+        var cmbSearch = parseInt('@ViewBag.cmbSearch');
+
+        var baseURL = '/Registration/RegistrationList';
+
+        createPaging(page, top, totalItems, baseURL, searchTerm, cmbSearch);
+    });
+</script>

@@ -43,41 +43,66 @@
     <div class="row">
         <div class="col-md-12 addElementContainer">
             <h4>Add an Incident</h4>
-            <div class="row">
-                <label>Title:&nbsp;</label><input type="text" id="txtIncTitle" name="txtIncTitle" />&emsp;
-                <label for="customerListChoice">Customer:&nbsp;</label>
-                <input list="customerList" id="customerListChoice" name="customerListChoice" class="inputStyle" />
-                <datalist id="customerList">
-                    @foreach (var cust in ViewBag.Customers)
-                    {
-                        <option value="@cust.CustomerID">@cust.Name</option>
-                    }
-                </datalist>
-                <label for="technicianListChoice">Technician:&nbsp;</label>
-                <input list="technicianList" id="technicianListChoice" name="technicianListChoice" class="inputStyle" />
-                <datalist id="technicianList">
-                    @foreach (var tech in ViewBag.Technicians)
-                    {
-                        <option value="@tech.TechID">@tech.Name</option>
-                    }
-                </datalist>
+            <div class="row inputsRow">
+                <div class="col-md-3">
+                    <label>Title:&nbsp;</label>
+                    <br />
+                    <input type="text" id="txtIncTitle" name="txtIncTitle" />&emsp;
+                </div>
+                <div class="col-md-3">
+                    <label for="customerListChoice">Customer:&nbsp;</label>
+                    <br />
+                    <input list="customerList" id="customerListChoice" name="customerListChoice" class="inputStyle" />
+                    <datalist id="customerList">
+                        @foreach (var cust in ViewBag.Customers)
+                        {
+                            <option value="@cust.CustomerID">@cust.Name</option>
+                        }
+                    </datalist>
+                </div>
+                <div class="col-md-3">
+                    <label for="technicianListChoice">Technician:&nbsp;</label>
+                    <br />
+                    <input list="technicianList" id="technicianListChoice" name="technicianListChoice" class="inputStyle" />
+                    <datalist id="technicianList">
+                        @foreach (var tech in ViewBag.Technicians)
+                        {
+                            <option value="@tech.TechID">@tech.Name</option>
+                        }
+                    </datalist>
+                </div>
+                <div class="col-md-3">
+                    <label>Product:&nbsp;</label>
+                    <br />
+                    <input list="productList" id="productListChoice" name="productListChoice" class="inputStyle" />
+                    <datalist id="productList">
+                        @foreach (var prod in ViewBag.Products)
+                        {
+                            <option value="@prod.ProductCode">@prod.Name</option>
+                        }
+                    </datalist>
+                </div>
             </div>
             <div class="row inputsRow">
-                <label>Product:&nbsp;</label>
-                <input list="productList" id="productListChoice" name="productListChoice" class="inputStyle" />
-                <datalist id="productList">
-                    @foreach (var prod in ViewBag.Products)
-                    {
-                        <option value="@prod.ProductCode">@prod.Name</option>
-                    }
-                </datalist>
-                <label>Date Opened:&nbsp;</label><input type="date" id="txtIncDateOpened" name="txtIncDateOpened" value="@DateTime.Today.ToShortDateString()" />&emsp;
-                <label>Date Closed:&nbsp;</label><input type="date" id="txtIncDateClosed" name="txtIncDateClosed"/>&emsp;
+                <div class="col-md-3">
+                    <label>Date Opened:&nbsp;</label>
+                    <br />
+                    <input type="date" id="txtIncDateOpened" name="txtIncDateOpened" value="@DateTime.Today.ToShortDateString()" />&emsp;
+                </div>
+                <div class="col-md-3">
+                    <label>Date Closed:&nbsp;</label>
+                    <br />
+                    <input type="date" id="txtIncDateClosed" name="txtIncDateClosed" />&emsp;
+                </div>
+                <div class="col-md-6">
+                    <label class="descriptionLabel">Description:&nbsp;</label>
+                    <br />
+                    <textarea rows="3" cols="100" id="txtIncDescription" name="txtIncDescription" class="inputStyle" style="width: 100%">
+                    </textarea>
+                </div>
             </div>
-            <div class="row">
-                <label>Description:&nbsp;</label><input type="text" id="txtIncDescription" name="txtIncDescription" />
-            </div>
-            <input type="submit" value="Submit" class="btnStyled" id="btnSubmitNewState" />
+
+            <input type="submit" value="Submit" class="btnStyled" id="btnSubmitNewIncident" />
         </div>
     </div>
 </form>
@@ -100,35 +125,61 @@
             <tbody>
                 @foreach (var incident in Model)
                 {
-                    <tr>
-                        <td>@incident.IncidentID</td>
-                        <td>@incident.Title</td>
-                        <td>@incident.DateOpened.ToShortDateString()</td>
-                        @if (!@incident.DateClosed.HasValue)
-                        {
-                            <td>Still Open</td>
-                        }
-                        else
-                        {
-                            <td>@incident.DateClosed.ToString().Substring(0, 10)</td>
-                        }
-                        <td>@incident.Customer.Name</td>
-                        @if (@incident.TechID == null)
-                        {
-                            <td>No Tech</td>
-                        }
-                        else
-                        {
-                            <td>@incident.Technician.Name</td>
-                        }
-                        <td>@incident.Product.Name</td>
+                <tr>
+                    <td>@incident.IncidentID</td>
+                    <td>@incident.Title</td>
+                    <td>@incident.DateOpened.ToShortDateString()</td>
+                    @if (!@incident.DateClosed.HasValue)
+                    {
+                        <td>Still Open</td>
+                    }
+                    else
+                    {
+                        <td>@incident.DateClosed.ToString().Substring(0, 10)</td>
+                    }
+                    <td>
+                        @Html.ActionLink(@incident.Customer.Name, "AddOrUpdateCustomer", "Customer", new { id = incident.CustomerID }, null)
+                    </td>
+                    @if (@incident.TechID == null)
+                    {
+                        <td>No Tech</td>
+                    }
+                    else
+                    {
                         <td>
-                            @Html.ActionLink("Edit", "AddOrUpdateIncident", "Incident", new { id = incident.IncidentID }, null) |
-                            @Html.ActionLink("Delete", "Delete", "Incident", new { id = incident.IncidentID }, new { @class = "deleteLink" })
+                            @Html.ActionLink(@incident.Technician.Name, "AddOrUpdateTech", "Technician", new { id = incident.TechID }, null)
                         </td>
-                    </tr>
+                    }
+                    <td>
+                        @Html.ActionLink(@incident.Product.Name, "AddOrUpdateProduct", "Product", new { code = incident.ProductCode }, null)
+                    </td>
+                    <td>
+                        <div class="detailsContainer">
+                            @Html.ActionLink("Details", "AddOrUpdateIncident", "Incident", new { id = incident.IncidentID }, new { @class = "detailsBtn" })
+                        </div>
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>
     </div>
 </div>
+
+<nav aria-label="...">
+    <ul class="pagination">
+    </ul>
+</nav>
+
+<script>
+    window.addEventListener('load', function () {
+        var page = parseInt('@ViewBag.page');
+        var top = parseInt('@ViewBag.top');
+        var totalItems = parseInt('@ViewBag.totalItems');
+        var searchTerm = ('@ViewBag.searchTerm');
+        var cmbSearch = parseInt('@ViewBag.cmbSearch');
+
+        var baseURL = '/Incident/IncidentList';
+
+        createPaging(page, top, totalItems, baseURL, searchTerm, cmbSearch);
+    });
+</script>

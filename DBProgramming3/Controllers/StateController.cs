@@ -15,7 +15,7 @@ namespace DBProgramming3.Views
     public class StateController : Controller
     {
         // GET: State
-        public ActionResult StateList(string cmbSearch, string searchTerm)
+        public ActionResult StateList(string cmbSearch, string searchTerm, int top = 15, int page = 1)
         {
             var context = new TechSupportEntities();
 
@@ -52,7 +52,18 @@ namespace DBProgramming3.Views
                         .ToList();
                 }
             }
-            
+
+            int skip = (page - 1) * (top);
+            int totalItems = states.Count();
+
+            ViewBag.totalItems = totalItems;
+            ViewBag.page = page;
+            ViewBag.top = top;
+            ViewBag.searchTerm = searchTerm;
+            ViewBag.cmbSearch = cmbSearch;
+
+            states = states.Skip(skip).Take(top).ToList();
+
 
             return View(states);
         }
@@ -114,28 +125,40 @@ namespace DBProgramming3.Views
         {
             var context = new TechSupportEntities();
 
+            string message = "";
+
+            string redirectUrl = "/State/StateList";
+
             try
             {
                 context.States.AddOrUpdate(state);
                 context.SaveChanges();
+
+                message = "State of " + state.StateName + " was successfully updated.";
             }
             catch (Exception ex)
             {
-                throw;
+                message = "Error: " + ex.Message;
             }
 
-            return Redirect("/State/StateList");
+            return new JsonResult()
+            {
+                Data = new { message, redirectUrl },
+                JsonRequestBehavior = JsonRequestBehavior.DenyGet
+            };
         }
 
-        public ActionResult Delete(string code)
+        public ActionResult Delete(string txtStateCode)
         {
             var context = new TechSupportEntities();
 
             string message = "";
 
+            string redirectUrl = "/State/StateList";
+
             try
             {
-                State stateToRemove = context.States.FirstOrDefault(s => s.StateCode == code);
+                State stateToRemove = context.States.FirstOrDefault(s => s.StateCode == txtStateCode);
 
                 context.States.Remove(stateToRemove);
                 context.SaveChanges();
@@ -147,13 +170,11 @@ namespace DBProgramming3.Views
                 message = "Error: " + ex.Message;
             }
 
-            return Redirect("/State/StateList");
-
-            /*return new JsonResult()
+            return new JsonResult()
             {
-                Data = new { message },
+                Data = new { message, redirectUrl },
                 JsonRequestBehavior = JsonRequestBehavior.DenyGet
-            };*/
+            };
         }
     }
 }

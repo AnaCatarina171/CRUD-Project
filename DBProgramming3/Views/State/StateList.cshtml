@@ -40,14 +40,29 @@
     <div class="row">
         <div class="col-md-12 addElementContainer">
             <h4>Add a State</h4>
-            <div>
-                <label>Code:&nbsp;</label><input type="text" id="txtStateCode" name="txtStateCode"/>&emsp;
-                @Html.ValidationMessage("txtStateCode")
-                <label>Name:&nbsp;</label><input type="text" id="txtStateName" name="txtStateName"/>&emsp;
-                <label>First Zip Code:&nbsp;</label><input type="number" id="txtStateFZipCode" name="txtStateFZipCode"/>&emsp;
-                <label>Last Zip Code:&nbsp;</label> <input type="number" id="txtStateLZipCode" name="txtStateLZipCode"/>
+            <div class="row">
+                <div class="col-md-3">
+                    <label>Code:&nbsp;</label>
+                    <br />
+                    <input type="text" id="txtStateCode" name="txtStateCode" />
+                </div>
+                <div class="col-md-3">
+                    <label>Name:&nbsp;</label>
+                    <br />
+                    <input type="text" id="txtStateName" name="txtStateName" />&emsp;
+                </div>
+                <div class="col-md-3">
+                    <label>First Zip Code:&nbsp;</label>
+                    <br />
+                    <input type="number" id="txtStateFZipCode" name="txtStateFZipCode" />&emsp;
+                </div>
+                <div class="col-md-3">
+                    <label>Last Zip Code:&nbsp;</label> 
+                    <br />
+                    <input type="number" id="txtStateLZipCode" name="txtStateLZipCode" />
+                </div>
             </div>
-            <input type="submit" value="Submit" class="btnStyled" id="btnSubmitNewState"/>
+            <input type="submit" value="Submit" class="btnStyled" id="btnSubmitNewState" />
         </div>
     </div>
 </form>
@@ -67,19 +82,38 @@
             <tbody>
                 @foreach (var state in Model)
                 {
-                    <tr>
-                        <td>@state.StateCode</td>
-                        <td>@state.StateName</td>
-                        <td>@state.FirstZipCode</td>
-                        <td>@state.LastZipCode</td>
-                        <td>
-                            @Html.ActionLink("Edit", "AddOrUpdateState", "State", new { code = state.StateCode}, null) |
-                            @Html.ActionLink("Delete", "Delete", "State", new { code = state.StateCode }, new { @class = "deleteLink" })
-                        </td>
-                    </tr>
+                <tr>
+                    <td>@state.StateCode</td>
+                    <td>@state.StateName</td>
+                    <td>@state.FirstZipCode</td>
+                    <td>@state.LastZipCode</td>
+                    <td>
+                        <div class="detailsContainer">
+                            @Html.ActionLink("Details", "AddOrUpdateState", "State", new { code = state.StateCode }, new { @class = "detailsBtn" })
+                        </div>
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>
     </div>
-
 </div>
+
+<nav aria-label="...">
+    <ul class="pagination">
+    </ul>
+</nav>
+
+<script>
+    window.addEventListener('load', function () {
+        var page = parseInt('@ViewBag.page');
+        var top = parseInt('@ViewBag.top');
+        var totalItems = parseInt('@ViewBag.totalItems');
+        var searchTerm = ('@ViewBag.searchTerm');
+        var cmbSearch = parseInt('@ViewBag.cmbSearch');
+
+        var baseURL = '/State/StateList';
+
+        createPaging(page, top, totalItems, baseURL, searchTerm, cmbSearch);
+    });
+</script>

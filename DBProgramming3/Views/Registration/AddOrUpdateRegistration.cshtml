@@ -9,11 +9,22 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;600;800&display=swap" rel="stylesheet">
 
-<div class="row">
-    <h2 class="mainHeader normalHeader">Edit Registration</h2>
+<link rel="stylesheet" href="~/Content/AddEditPage.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+<script defer src="~/Content/JavaScript.js"></script>
+
+<div class="returnContainer row">
+    <a href="/Registration/RegistrationList" class="returnLink"><i class="fa fa-arrow-left"></i> &nbsp; Return to Registrations List</a>
 </div>
 
-@using (Html.BeginForm("AddOrUpdateRegistration", "Registration", FormMethod.Post))
+<div class="row">
+    <h2 class="mainHeader">Edit Registration</h2>
+</div>
+
+@using (Html.BeginForm("AddOrUpdateRegistration", "Registration", FormMethod.Post, new { @class = "formEditElement" }))
 {
     <div class="row">
         <div class="col-md-12 addElementContainer">
@@ -28,17 +39,25 @@
                     </div>
                     <div class="col-md-4">
                         <label>Customer:&nbsp;</label>
-                            @Html.DropDownListFor(model => model.CustomerID, new SelectList(ViewBag.Customers, "CustomerID", "Name"),
-                        new { @class = "form-control" })
+                        @Html.DropDownListFor(model => model.CustomerID, new SelectList(ViewBag.Customers, "CustomerID", "Name"),
+                    new { @class = "form-control" })
                     </div>
                     <div class="col-md-4">
                         <label>Date:&nbsp;</label>
                         @Html.TextBoxFor(model => model.RegistrationDate,
-                            new { @class = "form-control", type = "date" , @Value = Model.RegistrationDate.ToShortDateString() })
+                            new { @class = "form-control", type = "date", @Value = Model.RegistrationDate.ToShortDateString() })
                     </div>
                 </div>
             </div>
-            <input type="submit" value="Submit" class="btnStyled" id="btnSubmitNewState" />
         </div>
     </div>
+
+    <input type="submit" value="Submit" class="btnStyled" id="btnSubmitNewState" />
 }
+
+<form method="post" action="/Registration/Delete" class="formDeleteElement">
+    <input type="number" id="customerId" name="customerId" value="@Model.CustomerID" style="display:none" />
+    <input type="text" id="productCode" name="productCode" value="@Model.ProductCode" style="display:none" />
+
+    <input type="submit" value="Delete Registration" class="deleteBtnStyled" />
+</form>

@@ -41,16 +41,51 @@
     <div class="row">
         <div class="col-md-12 addElementContainer">
             <h4>Add a Customer</h4>
-            <div class="row">
-                <label>Name:&nbsp;</label><input type="text" id="txtCustomerName" name="txtCustomerName" />&emsp;
-                <label>Phone:&nbsp;</label><input type="text" id="txtCustomerPhone" name="txtCustomerPhone" />&emsp;
-                <label>Email:&nbsp;</label><input type="text" id="txtCustomerEmail" name="txtCustomerEmail" />&emsp;
-                <label>State:&nbsp;</label> <input type="text" id="txtCustomerState" name="txtCustomerState" />
+            <div class="row inputsRow">
+                <div class="col-md-3">
+                    <label for="txtCustomerName">Name:&nbsp;</label>
+                    <br />
+                    <input type="text" id="txtCustomerName" name="txtCustomerName" />&emsp;
+                </div>
+                <div class="col-md-3">
+                    <label>Phone:&nbsp;</label>
+                    <br />
+                    <input type="text" id="txtCustomerPhone" name="txtCustomerPhone" />&emsp;
+                </div>
+                <div class="col-md-3">
+                    <label>Email:&nbsp;</label>
+                    <br />
+                    <input type="text" id="txtCustomerEmail" name="txtCustomerEmail" />&emsp;
+                </div>
+                <div class="col-md-3">
+                    <label>State:&nbsp;</label>
+                    <br />
+                    <input list="statesList" id="customerStateChoice" name="customerStateChoice" />
+                    <datalist id="statesList">
+                        @foreach (var states in ViewBag.States)
+                        {
+                            <option value="@states.StateCode">@states.StateName</option>
+                        }
+                    </datalist>
+                </div>
             </div>
             <div class="row inputsRow">
-                <label>City:&nbsp;</label><input type="text" id="txtCustomerCity" name="txtCustomerCity" />&emsp;
-                <label>Address:&nbsp;</label><input type="text" id="txtCustomerAddress" name="txtCustomerAddress" />&emsp;
-                <label>Zip Code:&nbsp;</label><input type="text" id="txtCustomerZipCode" name="txtCustomerZipCode" />&emsp;
+                <div class="col-md-3">
+                    <label>City:&nbsp;</label>
+                    <br />
+                    <input type="text" id="txtCustomerCity" name="txtCustomerCity" />&emsp;
+                </div>
+                <div class="col-md-3">
+                    <label>Address:&nbsp;</label>
+                    <br />
+                    <input type="text" id="txtCustomerAddress" name="txtCustomerAddress" />&emsp;
+                </div>
+                <div class="col-md-3">
+                    <label>Zip Code:&nbsp;</label>
+                    <br />
+                    <input type="text" id="txtCustomerZipCode" name="txtCustomerZipCode" />&emsp;
+                </div>
+                <div class="col-md-3"></div>
             </div>
             <input type="submit" value="Submit" class="btnStyled" id="btnSubmitNewState" />
         </div>
@@ -79,17 +114,39 @@
                         <td>@customer.CustomerID</td>
                         <td>@customer.Name</td>
                         <td>@customer.Phone</td>
-                        <td>@customer.Email</td>
-                        <td>@customer.State</td>
-                        <td>@customer.Incidents.Count()</td>
-                        <td>@customer.Registrations.Count()</td>
                         <td>
-                            @Html.ActionLink("Edit", "AddOrUpdateCustomer", "Customer", new { id = customer.CustomerID }, null) |
-                            @Html.ActionLink("Delete", "Delete", "Customer", new { id = customer.CustomerID }, new { @class = "deleteLink" })
-                         </td>
+                            <a href="mailto:@customer.Email">@customer.Email</a>
+                        </td>
+                        <td>@customer.State</td>
+                        <td><strong>@customer.Incidents.Count()</strong></td>
+                        <td><strong>@customer.Registrations.Count()</strong></td>
+                        <td>
+                            <div class="detailsContainer">
+                                @Html.ActionLink("Details", "AddOrUpdateCustomer", "Customer", new { id = customer.CustomerID }, new { @class = "detailsBtn"})
+                            </div>
+                        </td>
                     </tr>
                 }
             </tbody>
         </table>
     </div>
 </div>
+
+<nav aria-label="...">
+    <ul class="pagination">
+    </ul>
+</nav>
+
+<script>
+    window.addEventListener('load', function () {
+        var page = parseInt('@ViewBag.page');
+        var top = parseInt('@ViewBag.top');
+        var totalItems = parseInt('@ViewBag.totalItems');
+        var searchTerm = ('@ViewBag.searchTerm');
+        var cmbSearch = parseInt('@ViewBag.cmbSearch');
+
+        var baseURL = '/Customer/CustomerList';
+
+        createPaging(page, top, totalItems, baseURL, searchTerm, cmbSearch);
+    });
+</script>

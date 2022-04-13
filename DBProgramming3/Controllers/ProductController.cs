@@ -11,7 +11,7 @@ namespace DBProgramming3.Views
     public class ProductController : Controller
     {
         // GET: Product
-        public ActionResult ProductList(string cmbSearch, string searchTerm)
+        public ActionResult ProductList(string cmbSearch, string searchTerm, int top = 15, int page = 1)
         {
             var context = new TechSupportEntities();
 
@@ -36,6 +36,17 @@ namespace DBProgramming3.Views
                         .ToList();
                 }
             }
+
+            int skip = (page - 1) * (top);
+            int totalItems = products.Count();
+
+            ViewBag.totalItems = totalItems;
+            ViewBag.page = page;
+            ViewBag.top = top;
+            ViewBag.searchTerm = searchTerm;
+            ViewBag.cmbSearch = cmbSearch;
+
+            products = products.Skip(skip).Take(top).ToList();
 
             return View(products);
         }
@@ -99,28 +110,40 @@ namespace DBProgramming3.Views
         {
             var context = new TechSupportEntities();
 
+            string message = "";
+
+            string redirectUrl = "https://localhost:44323/Product/ProductList";
+
             try
             {
                 context.Products.AddOrUpdate(product);
                 context.SaveChanges();
+
+                message = "Product " + product.Name + " was successfully updated.";
             }
             catch (Exception ex)
             {
-                throw;
+                message = "An error occurred: " + ex.Message;
             }
 
-            return Redirect("/Product/ProductList");
+            return new JsonResult()
+            {
+                Data = new { message, redirectUrl },
+                JsonRequestBehavior = JsonRequestBehavior.DenyGet
+            };
         }
 
-        public ActionResult Delete(string code)
+        public ActionResult Delete(string txtProducCode)
         {
             var context = new TechSupportEntities();
 
             string message = "";
 
+            string redirectUrl = "https://localhost:44323/Product/ProductList";
+
             try
             {
-                Product productToRemove = context.Products.FirstOrDefault(p => p.ProductCode == code);
+                Product productToRemove = context.Products.FirstOrDefault(p => p.ProductCode == txtProducCode);
 
                 context.Products.Remove(productToRemove);
                 context.SaveChanges();
@@ -132,13 +155,11 @@ namespace DBProgramming3.Views
                 message = "Error: " + ex.Message;
             }
 
-            return Redirect("/Product/ProductList");
-
-            /*return new JsonResult()
+            return new JsonResult()
             {
-                Data = new { message },
+                Data = new { message, redirectUrl },
                 JsonRequestBehavior = JsonRequestBehavior.DenyGet
-            };*/
+            };
         }
     }
 }

@@ -6,33 +6,42 @@
 }
 
 .mainHeader {
-    text-align: left;
-    width: 100%;
-    margin: 90px 0 50px 0;
     font-weight: 600;
-    font-size: 3em;
-    text-shadow: 3px 2px 8px #dddddd;
+    text-align: center;
+    margin: 30px auto 40px auto;
+    width: %100;
+    padding: 20px 30px;
+    color: #fff;
+    background: #001c22;
+    border-radius: 5px;
+    box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.30);
 }
-
 .normalHeader {
-    text-align: center !important;
-    margin: 50px 0 50px 0;
+    font-size: 1.3em !important;
+    font-weight: 600;
+    text-align: center;
+    margin: 30px auto 20px auto;
+    width: 100%;
+    padding: 10px 30px;
+    color: #fff;
+    background: #001c22;
+    border-radius: 5px;
+    box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.30);
 }
-
 a {
     color: #000;
 }
 
-    a:hover {
-        color: #fff;
-    }
+a:hover {
+    color: #fff;
+}
 
 label {
     margin: auto;
 }
 
 .addElementContainer {
-    margin: 0 0 20px 0;
+    margin: 0 0 50px 0;
     padding: 10px;
     background: #dbfffb;
     border-radius: 10px;
@@ -65,27 +74,108 @@ h4 {
     display: block;
 }
 
+.deleteBtnStyled {
+    color: #000;
+    margin: 20px auto;
+    padding: 10px 15px;
+    width: 200px;
+    background: rgb(255 170 170 / 0.41);
+    border: 1px solid #000;
+    transition: 0.5s;
+    display: block;
+    text-align: center;
+}
+
+.deleteBtnStyled:hover {
+    text-decoration: none;
+    background: #ff0000;
+    border: 1px solid #ff0000;
+    transition: 0.3s;
+    color: #fff;
+}
+
+.inputsRow {
+    margin: 13px auto 0 auto;
+}
+
 input[type="text"], input[type="number"], input[type="date"],
 input[list], .inputStyle, .cmbSearch {
-    width: 170px;
+    width: 170px !important;
     outline: none;
     padding: 5px;
     margin: 5px auto;
     border-radius: 4px;
-    border: 1px solid #001c22;
+    border: 1px solid #001c22 !important;
     box-sizing: border-box;
     transition: 0.3s;
     display: block;
 }
 
-    input[type="text"]:focus, input[type="number"]:focus, input[type="date"]:focus,
-    .inputStyle:focus, .cmbSearch:focus {
-        border-color: #189AB4;
-        box-shadow: 0 0 8px 0 #189AB4;
-    }
+input[type="text"]:focus, input[type="number"]:focus, input[type="date"]:focus,
+.inputStyle:focus, .cmbSearch:focus {
+    border: 0.2px;
+    border-color: #189AB4;
+    box-shadow: 0 0 8px 0 #189AB4;
+}
+
+.form-control {
+    width: 170px;
+    border: 1px solid #001c22;
+    margin: 5px auto;
+    padding: 5px;
+    box-sizing: border-box;
+    display: block;
+}
+#descriptionArea{
+    padding: 10px;
+    width: 100% !important;
+    min-height: 50px;
+    height: max-content;
+    box-sizing:border-box;
+}
 
 .btnStyled:hover {
     color: #fff;
-    background: #001c22;
-    border: 1px solid #001c22;
+    background: #00829c;
+    border: 1px solid #00829c;
+}
+
+.returnContainer {
+    margin: 30px 0 0 0;
+}
+
+.returnLink{
+    font-size: 1.1em;
+}
+
+.returnLink:hover{
+    color: #ff0000;
+    text-decoration: none;
+}
+
+.otherDetailsBox {
+    padding: 10px;
+    background: #dbfffb;
+    border-radius: 10px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.detailsLink {
+    transition: 0.3s;
+}
+.detailsLink:hover{
+    font-size: 1.1em;
+    font-weight: 500;
+    color: #000;
+    text-decoration: none;
+}
+
+.formDeleteElement{
+    margin: 55px auto;
+}
+
+.numbers{
+    font-size: 2em;
+    font-weight: 600;
+    color: #700022
 }

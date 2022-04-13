@@ -11,7 +11,7 @@ namespace DBProgramming3.Views
     public class RegistrationController : Controller
     {
         // GET: Registration
-        public ActionResult RegistrationList(string cmbSearch, string searchTerm)
+        public ActionResult RegistrationList(string cmbSearch, string searchTerm, int top = 15, int page = 1)
         {
             var context = new TechSupportEntities();
 
@@ -52,6 +52,17 @@ namespace DBProgramming3.Views
                 }
             }
 
+            int skip = (page - 1) * (top);
+            int totalItems = registrations.Count();
+
+            ViewBag.totalItems = totalItems;
+            ViewBag.page = page;
+            ViewBag.top = top;
+            ViewBag.searchTerm = searchTerm;
+            ViewBag.cmbSearch = cmbSearch;
+
+            registrations = registrations.Skip(skip).Take(top).ToList();
+
             return View(registrations);
         }
 
@@ -66,13 +77,13 @@ namespace DBProgramming3.Views
             {
                 Customer customer = context.Customers.FirstOrDefault(c => c.Name == customerListChoice);
 
-                if (productListChoice == "" || customerListChoice == "" || 
+                if (productListChoice == "" || customerListChoice == "" ||
                     registrationDate == null || customer == null)
                 {
                     message = "Please, provide all the necessary information.";
                 }
                 else
-                { 
+                {
                     int customerID = customer.CustomerID;
 
                     Registration registration = new Registration
@@ -122,22 +133,37 @@ namespace DBProgramming3.Views
         {
             var context = new TechSupportEntities();
 
+            string message = "";
+
+            string redirectUrl = "/Registration/RegistrationList";
+
             try
             {
                 context.Registrations.AddOrUpdate(registration);
                 context.SaveChanges();
+
+                message = "Registration was successfully updated.";
+
             }
             catch (Exception ex)
             {
-                throw;
+                message = "Error: " + ex.Message;
             }
 
-            return Redirect("/Registration/RegistrationList");
+            return new JsonResult()
+            {
+                Data = new { message, redirectUrl },
+                JsonRequestBehavior = JsonRequestBehavior.DenyGet
+            };
         }
 
         public ActionResult Delete(string productCode, int customerID)
         {
             var context = new TechSupportEntities();
+
+            string message = "";
+
+            string redirectUrl = "/Registration/RegistrationList";
 
             try
             {
@@ -146,13 +172,54 @@ namespace DBProgramming3.Views
 
                 context.Registrations.Remove(registrationToRemove);
                 context.SaveChanges();
+
+                message = "Registration was successfully deleted.";
+            }
+            catch (Exception ex)
+            {
+                message = "Error: " + ex.Message;
+            }
+
+            return new JsonResult()
+            {
+                Data = new { message, redirectUrl },
+                JsonRequestBehavior = JsonRequestBehavior.DenyGet
+            };
+        }
+
+        public ActionResult elementRegistrations(string identification, string obj, string name)
+        {
+            var context = new TechSupportEntities();
+
+            List<Registration> registrations = context.Registrations.OrderBy(x => x.RegistrationDate).ToList();
+
+            ViewBag.Obj = obj;
+            ViewBag.Name = name;
+            ViewBag.ReturnLink = "";
+
+            try
+            {
+                if (obj == "Product")
+                {
+                    registrations = registrations.Where(x => x.ProductCode == identification).ToList();
+
+                    ViewBag.ReturnLink = "/Product/AddOrUpdateProduct?code=" + identification;
+                }
+                else
+                {
+                    int id = Convert.ToInt32(identification);
+
+                    registrations = registrations.Where(x => x.CustomerID == id).ToList();
+
+                    ViewBag.ReturnLink = "/Customer/AddOrUpdateCustomer/" + id;
+                }
             }
             catch (Exception ex)
             {
                 throw;
             }
 
-            return Redirect("/Registration/RegistrationList");
+            return View(registrations);
         }
     }
 }

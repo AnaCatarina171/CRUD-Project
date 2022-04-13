@@ -1,0 +1,55 @@
+﻿@model List<DBProgramming3.Models.Registration>
+
+@{
+    ViewBag.Title = "elementRegistrations";
+}
+
+<link rel="stylesheet" href="~/Content/StyleSheet1.css" />
+<link rel="stylesheet" href="~/Content/AddEditPage.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+<script defer src="~/Content/JavaScript.js"></script>
+
+<div class="returnContainer row">
+    <a href="@ViewBag.ReturnLink" class="returnLink"><i class="fa fa-arrow-left"></i> &nbsp; Return to @ViewBag.Obj @ViewBag.Name</a>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="secondMainHeader">Registration List For @ViewBag.Name @ViewBag.Obj</h2>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <table id="stateList" class="styled-table">
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Customer Name</th>
+                    <th>Registration Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var registration in Model)
+                {
+                    <tr>
+                        <td>@registration.Product.Name</td>
+                        <td>@registration.Customer.Name</td>
+                        <td>@registration.RegistrationDate.ToShortDateString()</td>
+                        <td>
+                            <div class="detailsContainer">
+                                @Html.ActionLink("Details", "AddOrUpdateRegistration", "Registration",
+                               new { productCode = registration.ProductCode, customerID = registration.CustomerID }, new { @class = "detailsBtn" })
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -8,9 +8,19 @@
 .mainHeader {
     text-align: left;
     width: 100%;
-    margin: 70px 0 70px 0;
+    margin: 90px 0 50px 0;
     font-weight: 600;
     font-size: 3em;
+    text-shadow: 3px 2px 8px #dddddd;
+}
+
+.secondMainHeader {
+    text-align: center;
+    width: 100%;
+    margin: 50px 0 50px 0;
+    font-weight: 600;
+    font-size: 2.3em;
+    color: #003552;
     text-shadow: 3px 2px 8px #dddddd;
 }
 
@@ -72,10 +82,12 @@ table tr:last-child td:last-child {
 
 a {
     color: #000;
+    font-weight: 500;
 }
 
 a:hover{
     color: #fff;
+    text-decoration: none;
 }
 
 th {
@@ -84,8 +96,30 @@ th {
 
 label{
     font-weight: 400;
-    margin: auto 5px auto 10px;
+    margin: auto;
 }
+
+.descriptionLabel{
+    color: #5a001a !important;
+    font-weight: bold !important;
+}
+
+.detailsContainer {
+    padding: 7px;
+    background: #001c22;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 0 10px 0 rgb(0 0 0 / 0.11);
+}
+
+.detailsBtn {
+    color: #fff;
+    font-weight: 600;
+}
+.detailsBtn:hover {
+    text-decoration: none;
+}
+
 /*----- Search Container -----*/
 .searchContainer {
     margin: 20px 0;
@@ -113,6 +147,9 @@ label{
     text-align: center;
     box-shadow: 0 0 10px 0 rgb(0 0 0 / 0.11);
 }
+/*.hidden {
+    display: none;
+}*/
 h4 {
     font-weight: 600;
     font-size: 1.3em;
@@ -123,15 +160,11 @@ h4 {
     color: #fff;
     background: #001c22;
     border-radius: 5px;
-    box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.20);
+    box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.50);
 }
-/*h4::after{
-    content: '';
-    width: 95%;
-    height: 0.5px;
-    background-color: #001c22;
-    display:block;
-    margin: 10px auto;
+/*h4:hover{
+    background: #189AB4;
+    cursor: pointer;
 }*/
 .btnStyled{
     margin: 20px 0 10px 0;
@@ -171,7 +204,7 @@ input[type="text"]:focus, input[type="number"]:focus, input[type="date"]:focus,
 .homeHeader {
     text-align: center;
     width: 100%;
-    margin: 150px 0 100px 0;
+    margin: 100px 0 100px 0;
     font-weight: 600;
 }
 p{
@@ -188,7 +221,7 @@ p{
 }
 .jumbotron {
     color: #fff;
-    height: 500px;
+    height: 400px;
     background-image: linear-gradient(rgba(4,9,30,0.7),rgba(4,9,30,0.7)),url(/Img/pexels-fauxels-3184454.jpg);
     background-position: center;
     background-size: cover;

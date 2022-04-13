@@ -11,7 +11,7 @@ namespace DBProgramming3.Views
     public class TechnicianController : Controller
     {
         // GET: Technician
-        public ActionResult TechList(string cmbSearch, string searchTerm)
+        public ActionResult TechList(string cmbSearch, string searchTerm, int top = 15, int page = 1)
         {
             var context = new TechSupportEntities();
 
@@ -49,6 +49,16 @@ namespace DBProgramming3.Views
                 }
             }
 
+            int skip = (page - 1) * (top);
+            int totalItems = technicians.Count();
+
+            ViewBag.totalItems = totalItems;
+            ViewBag.page = page;
+            ViewBag.top = top;
+            ViewBag.searchTerm = searchTerm;
+            ViewBag.cmbSearch = cmbSearch;
+
+            technicians = technicians.Skip(skip).Take(top).ToList();
 
             return View(technicians);
         }
@@ -110,36 +120,56 @@ namespace DBProgramming3.Views
         {
             var context = new TechSupportEntities();
 
+            string message = "";
+
+            string redirectUrl = "/Technician/TechList";
+
             try
             {
                 context.Technicians.AddOrUpdate(technician);
                 context.SaveChanges();
+
+                message = "Technician " + technician.Name + " was successfully updated.";
             }
             catch (Exception ex)
             {
-                throw;
+                message = "Error: " + ex.Message;
             }
 
-            return Redirect("/Technician/TechList");
+            return new JsonResult()
+            {
+                Data = new { message, redirectUrl },
+                JsonRequestBehavior = JsonRequestBehavior.DenyGet
+            };
         }
 
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int txtTechId)
         {
             var context = new TechSupportEntities();
 
+            string message = "";
+
+            string redirectUrl = "/Technician/TechList";
+
             try
             {
-                Technician techToRemove = context.Technicians.FirstOrDefault(t => t.TechID == id);
+                Technician techToRemove = context.Technicians.FirstOrDefault(t => t.TechID == txtTechId);
 
                 context.Technicians.Remove(techToRemove);
                 context.SaveChanges();
+
+                message = "Technician " + techToRemove.Name + " was successfully deleted.";
             }
             catch (Exception ex)
             {
-                throw;
+                message = "Error: " + ex.Message;
             }
 
-            return Redirect("/Technician/TechList");
+            return new JsonResult()
+            {
+                Data = new { message, redirectUrl },
+                JsonRequestBehavior = JsonRequestBehavior.DenyGet
+            };
         }
     }
 }

@@ -40,10 +40,26 @@
     <div class="row">
         <div class="col-md-12 addElementContainer">
             <h4>Add a Technician</h4>
-            <div>
-                <label>Name:&nbsp;</label><input type="text" id="txtTechName" name="txtTechName" />&emsp;
-                <label>Phone:&nbsp;</label><input type="text" id="txtTechPhone" name="txtTechPhone" />&emsp;
-                <label>Email:&nbsp;</label> <input type="text" id="txtTechEmail" name="txtTechEmail" />
+            <div class="row">
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-3">
+                    <label>Name:</label>
+                    <br />
+                    <input type="text" id="txtTechName" name="txtTechName" />
+                </div>
+                <div class="col-md-4">
+                    <label>Phone:</label>
+                    <br />
+                    <input type="text" id="txtTechPhone" name="txtTechPhone" />
+                </div>
+                <div class="col-md-3">
+                    <label>Email:</label>
+                    <br />
+                    <input type="text" id="txtTechEmail" name="txtTechEmail" />
+                </div>
+                <div class="col-md-1">
+                </div>
             </div>
             <input type="submit" value="Submit" class="btnStyled" id="btnSubmitNewTech" />
         </div>
@@ -70,22 +86,16 @@
                     <td>@technician.TechID</td>
                     <td>@technician.Name</td>
                     <td>@technician.Phone</td>
-                    <td>@technician.Email</td>
-                    @if (@technician.Incidents.Count() > 0)
-                    {
-                        <td>
-                            @technician.Incidents.Count()
-                            <br />
-                            @Html.ActionLink("Go To Incidents", "TechInvoices", "Invoices", new { id = technician.TechID }, null)
-                        </td>
-                    }
-                    else
-                    {
-                        <td>No Incidents</td>
-                    }
                     <td>
-                        @Html.ActionLink("Edit", "AddOrUpdateTech", "Technician", new { id = technician.TechID }, null) |
-                        @Html.ActionLink("Delete", "Delete", "Technician", new { id = technician.TechID }, new { id = "deleteLink" })
+                        <a href="mailto:@technician.Email">@technician.Email</a>
+                    </td>
+                    <td>
+                        <strong>@technician.Incidents.Count()</strong>
+                    </td>
+                    <td>
+                        <div class="detailsContainer">
+                            @Html.ActionLink("Details", "AddOrUpdateTech", "Technician", new { id = technician.TechID }, new { @class = "detailsBtn" })
+                        </div>
                     </td>
                 </tr>
                 }
@@ -93,3 +103,22 @@
         </table>
     </div>
 </div>
+
+<nav aria-label="...">
+    <ul class="pagination">
+    </ul>
+</nav>
+
+<script>
+    window.addEventListener('load', function () {
+        var page = parseInt('@ViewBag.page');
+        var top = parseInt('@ViewBag.top');
+        var totalItems = parseInt('@ViewBag.totalItems');
+        var searchTerm = ('@ViewBag.searchTerm');
+        var cmbSearch = parseInt('@ViewBag.cmbSearch');
+
+        var baseURL = '/Technician/TechList';
+
+        createPaging(page, top, totalItems, baseURL, searchTerm, cmbSearch);
+    });
+</script>

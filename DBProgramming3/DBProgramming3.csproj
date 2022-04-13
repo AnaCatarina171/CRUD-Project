@@ -128,7 +128,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\MessageBox.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -245,12 +244,13 @@
     <Content Include="Views\Customer\CustomerList.cshtml" />
     <Content Include="Views\Incident\IncidentList.cshtml" />
     <Content Include="Views\Registration\RegistrationList.cshtml" />
-    <Content Include="Views\Test\Index.cshtml" />
     <Content Include="Views\Technician\AddOrUpdateTech.cshtml" />
     <Content Include="Views\Registration\AddOrUpdateRegistration.cshtml" />
     <Content Include="Views\Product\AddOrUpdateProduct.cshtml" />
     <Content Include="Views\Customer\AddOrUpdateCustomer.cshtml" />
     <Content Include="Views\Incident\AddOrUpdateIncident.cshtml" />
+    <Content Include="Views\Registration\elementRegistrations.cshtml" />
+    <Content Include="Views\Incident\ElementIncidents.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

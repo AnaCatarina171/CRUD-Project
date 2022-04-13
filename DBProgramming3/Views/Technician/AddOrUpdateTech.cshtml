@@ -1,4 +1,4 @@
-﻿@model DBProgramming3.Models.Technician 
+﻿@model DBProgramming3.Models.Technician
 
 @{
     ViewBag.Title = "AddOrUpdateTech";
@@ -8,32 +8,69 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+<script defer src="~/Content/JavaScript.js"></script>
 
-<div class="row">
-    <h2 class="mainHeader normalHeader">Edit @Model.Name Information</h2>
+<div class="returnContainer row">
+    <a href="/Technician/TechList" class="returnLink"><i class="fa fa-arrow-left"></i> &nbsp; Return to Technicians</a>
 </div>
 
-@using (Html.BeginForm("AddOrUpdateTech", "Technician", FormMethod.Post))
+<div class="row">
+    <h2 class="mainHeader">Edit Tech @Model.Name</h2>
+</div>
+
+@using (Html.BeginForm("AddOrUpdateTech", "Technician", FormMethod.Post, new { @class = "formEditElement" }))
 {
     @Html.HiddenFor(t => t.TechID);
-<div class="row">
-    <div class="col-md-12 addElementContainer">
-        <div>
-            <div class="row">
-                <div class="col-md-4">
-                    <label>Name:&nbsp;</label>@Html.TextBoxFor(t => t.Name, new { @class = "form-control" })
-                </div>
-                <div class="col-md-4">
-                    <label>Phone:&nbsp;</label>@Html.TextBoxFor(t => t.Phone, new { @class = "form-control" })
-                </div>
-                <div class="col-md-4">
-                    <label>Email:&nbsp;</label>@Html.TextBoxFor(t => t.Email, new { @class = "form-control" })
+    <div class="row">
+        <div class="col-md-12 addElementContainer">
+            <div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Name:&nbsp;</label>@Html.TextBoxFor(t => t.Name, new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-4">
+                        <label>Phone:&nbsp;</label>@Html.TextBoxFor(t => t.Phone, new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-4">
+                        <label>Email:&nbsp;</label>@Html.TextBoxFor(t => t.Email, new { @class = "form-control" })
+                    </div>
                 </div>
             </div>
         </div>
+        <div class="col-md-12">
+            <input type="submit" value="Submit" class="btnStyled" id="btnSubmitNewTech" />
+        </div>
     </div>
-    <div class="col-md-12">
-        <input type="submit" value="Submit" class="btnStyled" id="btnSubmitNewTech" />
+}
+
+<div class="row">
+    <h3 class="normalHeader">Other Details</h3>
+</div>
+<div class="row">
+    <div class="col-md-4">
+
+    </div>
+    <div class="col-md-4">
+        <div class="otherDetailsBox">
+            <h4>Incidents</h4>
+            <p class="numbers"># @Model.Incidents.Count()</p>
+            @if (@Model.Incidents.Count() > 0)
+            {
+                @Html.ActionLink("Go To Incidents", "elementIncidents", "Incident",
+                       new { identification = Model.TechID, obj = "Technician", name = Model.Name },
+                       new { @class = "detailsLink" })
+            }
+            else
+            {
+                <p>No Incident</p>
+            }
+        </div>
+    </div>
+    <div class="col-md-4">
+        <form method="post" action="/Technician/Delete" class="formDeleteElement">
+            <input type="number" id="txtTechId" name="txtTechId" value="@Model.TechID" style="display:none" />
+            <input type="submit" value="Delete Tech" class="deleteBtnStyled" />
+        </form>
     </div>
 </div>
-}

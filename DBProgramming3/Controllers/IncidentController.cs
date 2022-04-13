@@ -11,7 +11,7 @@ namespace DBProgramming3.Views
     public class IncidentController : Controller
     {
         // GET: Incident
-        public ActionResult IncidentList(string cmbSearch, string searchTerm)
+        public ActionResult IncidentList(string cmbSearch, string searchTerm, int top = 15, int page = 1)
         {
             var context = new TechSupportEntities();
 
@@ -71,12 +71,23 @@ namespace DBProgramming3.Views
                 }
             }
 
+            int skip = (page - 1) * (top);
+            int totalItems = incidents.Count();
+
+            ViewBag.totalItems = totalItems;
+            ViewBag.page = page;
+            ViewBag.top = top;
+            ViewBag.searchTerm = searchTerm;
+            ViewBag.cmbSearch = cmbSearch;
+
+            incidents = incidents.Skip(skip).Take(top).ToList();
+
             return View(incidents);
         }
 
-        public ActionResult CreateIncident(string txtIncTitle, int customerListChoice,
-            int technicianListChoice, string productListChoice, DateTime txtIncDateOpened,
-             string txtIncDescription, DateTime? txtIncDateClosed = null)
+        public ActionResult CreateIncident(string txtIncTitle, string productListChoice, 
+            DateTime txtIncDateOpened, string txtIncDescription, DateTime? txtIncDateClosed,
+            int customerListChoice = 0, int technicianListChoice = 0)
         {
             var context = new TechSupportEntities();
             
@@ -146,40 +157,100 @@ namespace DBProgramming3.Views
         {
             var context = new TechSupportEntities();
 
+            string message = "";
+
+            string redirectUrl = "/Incident/IncidentList";
+
             try
             {
                 context.Incidents.AddOrUpdate(incident);
                 context.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
 
-            return Redirect("/Incident/IncidentList");
-        }
-
-        public ActionResult Delete(int id)
-        {
-            var context = new TechSupportEntities();
-
-            string message = "";
-
-            try
-            {
-                Incident incidentToRemove = context.Incidents.FirstOrDefault(i => i.IncidentID == id);
-
-                context.Incidents.Remove(incidentToRemove);
-                context.SaveChanges();
-
-                message = "Incident #" + incidentToRemove.IncidentID + " was deleted.";
+                message = "Incident #" + incident.IncidentID + " was successfully updated.";
             }
             catch (Exception ex)
             {
                 message = "Error: " + ex.Message;
             }
 
-            return Redirect("/Incident/IncidentList");
+            return new JsonResult()
+            {
+                Data = new { message, redirectUrl },
+                JsonRequestBehavior = JsonRequestBehavior.DenyGet
+            };
+        }
+
+        public ActionResult Delete(int txtIncidentId)
+        {
+            var context = new TechSupportEntities();
+
+            string message = "";
+
+            string redirectUrl = "/Incident/IncidentList";
+
+            try
+            {
+                Incident incidentToRemove = context.Incidents.FirstOrDefault(i => i.IncidentID == txtIncidentId);
+
+                context.Incidents.Remove(incidentToRemove);
+                context.SaveChanges();
+
+                message = "Incident #" + incidentToRemove.IncidentID + " was successfully deleted.";
+            }
+            catch (Exception ex)
+            {
+                message = "Error: " + ex.Message;
+            }
+
+            return new JsonResult()
+            {
+                Data = new { message, redirectUrl },
+                JsonRequestBehavior = JsonRequestBehavior.DenyGet
+            };
+        }
+
+        public ActionResult elementIncidents(string identification, string obj, string name)
+        {
+            var context = new TechSupportEntities();
+
+            List<Incident> incidents = context.Incidents.OrderBy(x => x.IncidentID).ToList();
+
+            ViewBag.Obj = obj;
+            ViewBag.Name = name;
+            ViewBag.ReturnLink = "";
+
+            try
+            {
+                if (obj == "Product")
+                {
+                    incidents = incidents.Where(x => x.ProductCode == identification).ToList();
+
+                    ViewBag.ReturnLink = "/Product/AddOrUpdateProduct?code=" + identification;
+                }
+                else
+                {
+                    int id = Convert.ToInt32(identification);
+
+                    if (obj == "Customer")
+                    {
+                        incidents = incidents.Where(x => x.CustomerID == id).ToList();
+
+                        ViewBag.ReturnLink = "/Customer/AddOrUpdateCustomer/" + id;
+                    }
+                    else if (obj == "Technician")
+                    {
+                        incidents = incidents.Where(x => x.TechID == id).ToList();
+
+                        ViewBag.ReturnLink = "/Technician/AddOrUpdateTech/" + id;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+            return View(incidents);
         }
     }
 }
